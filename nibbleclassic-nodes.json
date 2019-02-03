@@ -1,0 +1,10 @@
+{
+  "nodes": [
+    {
+      "name": "NibbleClassic public node",
+      "url": "172.62.42.108",
+      "port": 17122,
+      "ssl": false
+    }
+  ]
+}
