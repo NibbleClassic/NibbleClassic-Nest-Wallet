@@ -20,7 +20,7 @@ Rectangle {
     Text {
         id: textOpenWalletDescr
         color: "#ffffff"
-        text: "If you are new to TurtleCoin, choose \"Create a new wallet\"."
+        text: "If you are new to NibbleClassic, choose \"Create a new wallet\"."
         anchors.right: parent.right
         anchors.rightMargin: 15
         anchors.left: parent.left
@@ -476,7 +476,7 @@ Rectangle {
                 id: textInputCreateWalletFilename
                 anchors.fill: parent
                 color: "#cfcfcf"
-                text: "myFirstTRTLWallet"
+                text: "myFirstNBXWallet"
                 rightPadding: 5
                 leftPadding: 5
                 selectionColor: "#eeeeee"
@@ -738,7 +738,7 @@ Rectangle {
                 id: textInputImportWalletFilename
                 anchors.fill: parent
                 color: "#cfcfcf"
-                text: "myTRTLWallet"
+                text: "myNBXWallet"
                 rightPadding: 5
                 leftPadding: 5
                 selectionColor: "#eeeeee"

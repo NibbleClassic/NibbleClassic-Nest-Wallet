@@ -3,8 +3,8 @@
 // Please see the included LICENSE file for more information.
 //
 
-// Package turtlecoinwalletdrpcgo handles the the rpc connection between your app and turtle-service
-package turtlecoinwalletdrpcgo
+// Package nibbleclassicwalletdrpcgo handles the the rpc connection between your app and turtle-service
+package nibbleclassicwalletdrpcgo
 
 import (
 	"bytes"
@@ -35,7 +35,7 @@ var (
 )
 
 // RequestBalance provides the available and locked balances of the current wallet
-// returned balances are expressed in TRTL, not in 0.01 TRTL
+// returned balances are expressed in NBX, not in 0.01 NBX
 func RequestBalance(rpcPassword string) (availableBalance float64, lockedBalance float64, totalBalance float64, err error) {
 
 	args := make(map[string]interface{})
@@ -137,11 +137,11 @@ func RequestStatus(rpcPassword string) (walletBlockCount int, knownBlockCount in
 }
 
 // SendTransaction makes a transfer with the provided information.
-// parameters amount and fee are expressed in TRTL, not 0.01 TRTL
+// parameters amount and fee are expressed in NBX, not 0.01 NBX
 func SendTransaction(addressRecipient string, amount float64, paymentID string, fee float64, rpcPassword string) (transactionHash string, err error) {
 
-	amountInt := uint64(amount * 100) // expressed in hundredth of TRTL
-	feeInt := uint64(fee * 100)       // expressed in hundredth of TRTL
+	amountInt := uint64(amount * 100) // expressed in hundredth of NBX
+	feeInt := uint64(fee * 100)       // expressed in hundredth of NBX
 
 	args := make(map[string]interface{})
 	args["fee"] = feeInt
@@ -235,12 +235,12 @@ func SaveWallet(rpcPassword string) (err error) {
 }
 
 // EstimateFusion counts the number of unspent outputs of the specified addresses and returns how many of those outputs can be optimized. This method is used to understand if a fusion transaction can be created. If fusionReadyCount returns a value = 0, then a fusion transaction cannot be created.
-// threshold is the value that determines which outputs will be optimized. Only the outputs, lesser than the threshold value, will be included into a fusion transaction (threshold is expressed in TRTL, not 0.01 TRTL).
+// threshold is the value that determines which outputs will be optimized. Only the outputs, lesser than the threshold value, will be included into a fusion transaction (threshold is expressed in NBX, not 0.01 NBX).
 // fusionReadyCount is the number of outputs that can be optimized.
 // totalOutputCount is the total number of unspent outputs of the specified addresses.
 func EstimateFusion(threshold int, addresses []string, rpcPassword string) (fusionReadyCount int, totalOutputCount int, err error) {
 
-	threshold *= 100 // expressed in hundredth of TRTL
+	threshold *= 100 // expressed in hundredth of NBX
 
 	args := make(map[string]interface{})
 	args["threshold"] = threshold
@@ -259,11 +259,11 @@ func EstimateFusion(threshold int, addresses []string, rpcPassword string) (fusi
 }
 
 // SendFusionTransaction allows you to send a fusion transaction, by taking funds from selected addresses and transferring them to the destination address.
-// threshold is the value that determines which outputs will be optimized. Only the outputs, lesser than the threshold value, will be included into a fusion transaction (threshold is expressed in TRTL, not 0.01 TRTL).
-// parameters amount and fee are expressed in TRTL, not 0.01 TRTL
+// threshold is the value that determines which outputs will be optimized. Only the outputs, lesser than the threshold value, will be included into a fusion transaction (threshold is expressed in NBX, not 0.01 NBX).
+// parameters amount and fee are expressed in NBX, not 0.01 NBX
 func SendFusionTransaction(threshold int, addresses []string, destinationAddress string, rpcPassword string) (transactionHash string, err error) {
 
-	threshold *= 100 // expressed in hundredth of TRTL
+	threshold *= 100 // expressed in hundredth of NBX
 
 	args := make(map[string]interface{})
 	args["threshold"] = threshold
@@ -285,7 +285,7 @@ func SendFusionTransaction(threshold int, addresses []string, destinationAddress
 }
 
 // GetFeeInfo returns info on the fee requested by the remote node for every transactions
-// returned fee is expressed in TRTL, not in 0.01 TRTL
+// returned fee is expressed in NBX, not in 0.01 NBX
 func GetFeeInfo(rpcPassword string) (address string, fee float64, status string, err error) {
 
 	args := make(map[string]interface{})

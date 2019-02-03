@@ -20,20 +20,20 @@ Import wallet from seed | wallet created in app folder. Check backup seed, addre
 Open existing wallet -> close Nest -> reopen Nest | path to previously opened wallet should appear. Test opening it again without changing path. 
 Button copy address | Pop up "Copied!" and address should be copied to clipboard.
 Button copy tr. id | Pop up "Copied!" and tr. id should be copied to clipboard.
-Button explore transaction | Trtl explorer opens in default browser with the right transacton.
-Receive trtl | Balance updates automatically and new confirmed transaction added to list previous transactions
-Send TRTL, address diff. than 99 chars or 187 chars | error: address invalid
-Send TRTL, address not start by TRTL | error: address invalid
-Send TRTL, amount is 0 or less | error: amount should be greater than 0
-Send TRTL, amount is not a number | error: amount invalid
-Send TRTL, amount + fee is more than available balance | error: available balance is insufficient
-Send TRTL, small valid amount | dialog for confirming transfer. After confirmation, popup TRTL sent. amount is received on the other end
-Send TRTL, invalid payment id | error: wrong payment id format
-Send TRTL, valid payment id | popup TRTL sent. amount is received on the other end with correct payment id
-Send TRTL, valid integrated address | popup TRTL sent. amount is received on the other end with correct payment id from integrated address
+Button explore transaction | NBX explorer opens in default browser with the right transacton.
+Receive NBX | Balance updates automatically and new confirmed transaction added to list previous transactions
+Send NBX, address diff. than 99 chars or 187 chars | error: address invalid
+Send NBX, address not start by NBX | error: address invalid
+Send NBX, amount is 0 or less | error: amount should be greater than 0
+Send NBX, amount is not a number | error: amount invalid
+Send NBX, amount + fee is more than available balance | error: available balance is insufficient
+Send NBX, small valid amount | dialog for confirming transfer. After confirmation, popup NBX sent. amount is received on the other end
+Send NBX, invalid payment id | error: wrong payment id format
+Send NBX, valid payment id | popup NBX sent. amount is received on the other end with correct payment id
+Send NBX, valid integrated address | popup NBX sent. amount is received on the other end with correct payment id from integrated address
 Select the option local blockchain, restart | local blockchain should still be selected
-Open wallet with local blockchain selected and TurtleCoind started before | TurtleCoind should not be started automatically and should not close after wallet is closed
-Open wallet with local blockchain selected and TurtleCoind not started before | TurtleCoind should start automatically and should close after Nest is closed
+Open wallet with local blockchain selected and NibbleClassicd started before | NibbleClassicd should not be started automatically and should not close after wallet is closed
+Open wallet with local blockchain selected and NibbleClassicd not started before | NibbleClassicd should start automatically and should close after Nest is closed
 Test using the wallet with local blockchain selected | 
 Test using the wallet with remote node selected |
 Reduce window height and test scrolling |
@@ -41,7 +41,7 @@ Check wallet filename is displayed above address |
 Click Settings | Settings screen appears
 Close Settings | Settings screen disappears
 Settings: Enable display in USD -> Close Nest -> Reopen | Setting is still enabled
-Display in USD enabled -> Open a wallet| Balance is displayed in USD (under TRTL balance)
+Display in USD enabled -> Open a wallet| Balance is displayed in USD (under NBX balance)
 Display in USD enabled -> type an amount to be transfered| Value is displayed in USD
 Settings: change remote node address and port -> click save -> close and reopen Nest | new address in remote node radio button and in settings
 Settings: click remote node reset to default -> close and reopen Nest | default address in remote node radio button and in settings
@@ -68,5 +68,5 @@ If send transaction with size too large, proposed to do fusion -> click fusion |
 
 - Version number
 - No log.Debug remaining
-- TurtleCoind and turtle-service included in the bundle
-- latest checkpoint csv included in the bundle (same location as TurtleCoind)
+- NibbleClassicd and turtle-service included in the bundle
+- latest checkpoint csv included in the bundle (same location as NibbleClassicd)

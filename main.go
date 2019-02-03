@@ -1,4 +1,4 @@
-// Copyright (c) 2018, The TurtleCoin Developers
+// Copyright (c) 2018, The NibbleClassic Developers
 //
 // Please see the included LICENSE file for more information.
 //
@@ -6,8 +6,8 @@
 package main
 
 import (
-	"TurtleCoin-Nest/turtlecoinwalletdrpcgo"
-	"TurtleCoin-Nest/walletdmanager"
+	"NibbleClassic-Nest/nibbleclassicwalletdrpcgo"
+	"NibbleClassic-Nest/walletdmanager"
 	"encoding/csv"
 	"encoding/json"
 	"io"
@@ -34,7 +34,7 @@ import (
 )
 
 var (
-	transfers                   []turtlecoinwalletdrpcgo.Transfer
+	transfers                   []nibbleclassicwalletdrpcgo.Transfer
 	remoteNodes                 []node
 	indexSelectedRemoteNode     = 0
 	tickerRefreshWalletData     *time.Ticker
@@ -45,7 +45,7 @@ var (
 	useCheckpoints              = true
 	displayFiatConversion       = false
 	stringBackupKeys            = ""
-	rateUSDTRTL                 float64 // USD value for 1 TRTL
+	rateUSDNBX                 float64 // USD value for 1 NBX
 	customRemoteDaemonAddress   = defaultRemoteDaemonAddress
 	customRemoteDaemonPort      = defaultRemoteDaemonPort
 	limitDisplayedTransactions  = true
@@ -78,7 +78,7 @@ func main() {
 			log.Fatal(err)
 		}
 		pathToHomeDir = usr.HomeDir
-		pathToAppFolder := pathToHomeDir + "/Library/Application Support/TurtleCoin-Nest"
+		pathToAppFolder := pathToHomeDir + "/Library/Application Support/NibbleClassic-Nest"
 		os.Mkdir(pathToAppFolder, os.ModePerm)
 		pathToDB = pathToAppFolder + "/" + pathToDB
 
@@ -123,7 +123,7 @@ func main() {
 	log.WithField("version", versionNest).Info("Application started")
 
 	go func() {
-		requestRateTRTL()
+		requestRateNBX()
 	}()
 
 	platform := "linux"
@@ -176,7 +176,7 @@ func main() {
 	log.Info("Application closed")
 
 	walletdmanager.GracefullyQuitWalletd()
-	walletdmanager.GracefullyQuitTurtleCoind()
+	walletdmanager.GracefullyQuitNibbleClassicd()
 }
 
 func startDisplayWalletInfo() {
@@ -224,7 +224,7 @@ func getAndDisplayBalances() {
 	if err == nil {
 		qmlBridge.DisplayAvailableBalance(humanize.FormatFloat("#,###.##", walletAvailableBalance))
 		qmlBridge.DisplayLockedBalance(humanize.FormatFloat("#,###.##", walletLockedBalance))
-		balanceUSD := walletTotalBalance * rateUSDTRTL
+		balanceUSD := walletTotalBalance * rateUSDNBX
 		qmlBridge.DisplayTotalBalance(humanize.FormatFloat("#,###.##", walletTotalBalance), humanize.FormatFloat("#,###.##", balanceUSD))
 	}
 }
@@ -314,7 +314,7 @@ func getAndDisplayListTransactions(forceFullUpdate bool) {
 					amountString += "- "
 					amountString += strconv.FormatFloat(-amount, 'f', -1, 64)
 				}
-				amountString += " TRTL (fee: " + strconv.FormatFloat(transfer.Fee, 'f', 2, 64) + ")"
+				amountString += " NBX (fee: " + strconv.FormatFloat(transfer.Fee, 'f', 2, 64) + ")"
 				confirmationsString := confirmationsStringRepresentation(transfer.Confirmations)
 				timeString := transfer.Timestamp.Format("2006-01-02 15:04:05")
 				transactionNumberString := strconv.Itoa(transactionNumber) + ")"
@@ -358,7 +358,7 @@ func transfer(transferAddress string, transferAmount string, transferPaymentID s
 	getAndDisplayBalances()
 	qmlBridge.ClearTransferAmount()
 	qmlBridge.FinishedSendingTransaction()
-	qmlBridge.DisplayPopup("TRTLs sent successfully", 4000)
+	qmlBridge.DisplayPopup("NBXs sent successfully", 4000)
 }
 
 func optimizeWalletWithFusion() {
@@ -620,8 +620,8 @@ func openBrowser(url string) bool {
 	return cmd.Start() == nil
 }
 
-func requestRateTRTL() {
-	response, err := http.Get(urlCryptoCompareTRTL)
+func requestRateNBX() {
+	response, err := http.Get(urlCryptoCompareNBX)
 
 	if err != nil {
 		log.Error("error fetching from cryptocompare: ", err)
@@ -636,7 +636,7 @@ func requestRateTRTL() {
 				log.Error("error JSON unmarshaling request cryptocompare: ", err)
 			} else {
 				resultsMap := resultInterface.(map[string]interface{})
-				rateUSDTRTL = resultsMap["USD"].(float64)
+				rateUSDNBX = resultsMap["USD"].(float64)
 			}
 		}
 	}
@@ -677,7 +677,7 @@ func getAndDisplayListRemoteNodes() {
 				} else {
 					nodeNameAndFee += humanize.FtoaWithDigits(feeAmount, 2)
 				}
-				nodeNameAndFee += " TRTL)"
+				nodeNameAndFee += " NBX)"
 				qmlBridge.ChangeTextRemoteNode(theIndex, nodeNameAndFee)
 			}()
 		}
@@ -695,12 +695,12 @@ func getAndDisplayListRemoteNodes() {
 	qmlBridge.SetSelectedRemoteNode(indexSelectedRemoteNode)
 }
 
-func amountStringUSDToTRTL(amountTRTLString string) string {
-	amountTRTL, err := strconv.ParseFloat(amountTRTLString, 64)
-	if err != nil || amountTRTL <= 0 || rateUSDTRTL == 0 {
+func amountStringUSDToNBX(amountNBXString string) string {
+	amountNBX, err := strconv.ParseFloat(amountNBXString, 64)
+	if err != nil || amountNBX <= 0 || rateUSDNBX == 0 {
 		return ""
 	}
-	amountUSD := amountTRTL * rateUSDTRTL
+	amountUSD := amountNBX * rateUSDNBX
 	amountUSDString := strconv.FormatFloat(amountUSD, 'f', 2, 64) + " $"
 	return amountUSDString
 }

@@ -19,26 +19,26 @@ matrix:
     - LABEL="linux"
 
 script:
-- export TURTLECOIN_URL=https://api.github.com/repos/turtlecoin/turtlecoin/releases/latest
+- export NibbleClassic_URL=https://api.github.com/repos/NibbleClassic/NibbleClassic/releases/latest
 
 # Linux build commands
 - if [[ "$LABEL" == "linux" ]]; then ./scripts/build_linux.sh ; fi
 - if [[ "$LABEL" == "linux" ]]; then rm -rf *.tar.gz ; fi
-- if [[ "$LABEL" == "linux" ]]; then export LATEST_TURTLECOIN=`curl -s $TURTLECOIN_URL | grep browser_download_url | grep linux | cut -d '"' -f 4 | cut -d '/' -f 9` ; fi
-- if [[ "$LABEL" == "linux" ]]; then export TURTLECOIN_DOWNLOAD=`curl -s $TURTLECOIN_URL | grep browser_download_url | grep linux | cut -d '"' -f 4` ; fi
-- if [[ "$LABEL" == "linux" ]]; then wget $TURTLECOIN_DOWNLOAD ; fi
-- if [[ "$LABEL" == "linux" ]]; then tar xzf $LATEST_TURTLECOIN --strip-components 1 ; fi
-- if [[ "$LABEL" == "linux" ]]; then cp TurtleCoind turtle-service ./deploy/linux ; fi
+- if [[ "$LABEL" == "linux" ]]; then export LATEST_NibbleClassic=`curl -s $NibbleClassic_URL | grep browser_download_url | grep linux | cut -d '"' -f 4 | cut -d '/' -f 9` ; fi
+- if [[ "$LABEL" == "linux" ]]; then export NibbleClassic_DOWNLOAD=`curl -s $NibbleClassic_URL | grep browser_download_url | grep linux | cut -d '"' -f 4` ; fi
+- if [[ "$LABEL" == "linux" ]]; then wget $NibbleClassic_DOWNLOAD ; fi
+- if [[ "$LABEL" == "linux" ]]; then tar xzf $LATEST_NibbleClassic --strip-components 1 ; fi
+- if [[ "$LABEL" == "linux" ]]; then cp NibbleClassicd turtle-service ./deploy/linux ; fi
 - if [[ "$LABEL" == "linux" ]]; then ls -la ./deploy/linux ; fi
 
 - if [[ "${TRAVIS_TAG}" == "" ]]; then export TRAVIS_TAG=${TRAVIS_COMMIT} ; fi
-- rm -rf TurtleCoin-Nest-${TRAVIS_TAG}
-- mkdir TurtleCoin-Nest-${TRAVIS_TAG}
-- cp LICENSE.md TurtleCoin-Nest-${TRAVIS_TAG}
-- /bin/cp -r ./deploy/${LABEL}/* ./TurtleCoin-Nest-${TRAVIS_TAG}
-- tar cvfz TurtleCoin-Nest-${TRAVIS_TAG}-${LABEL}.tar.gz TurtleCoin-Nest-${TRAVIS_TAG}/
+- rm -rf NibbleClassic-Nest-${TRAVIS_TAG}
+- mkdir NibbleClassic-Nest-${TRAVIS_TAG}
+- cp LICENSE.md NibbleClassic-Nest-${TRAVIS_TAG}
+- /bin/cp -r ./deploy/${LABEL}/* ./NibbleClassic-Nest-${TRAVIS_TAG}
+- tar cvfz NibbleClassic-Nest-${TRAVIS_TAG}-${LABEL}.tar.gz NibbleClassic-Nest-${TRAVIS_TAG}/
 - rm -rf builds
 - mkdir builds
-- cp TurtleCoin-Nest-${TRAVIS_TAG}-${LABEL}.tar.gz builds
+- cp NibbleClassic-Nest-${TRAVIS_TAG}-${LABEL}.tar.gz builds
 - ls -la ./builds
 

@@ -3,7 +3,7 @@
 // Please see the included LICENSE file for more information.
 //
 
-package turtlecoinwalletdrpcgo
+package nibbleclassicwalletdrpcgo
 
 // rpcPayload is the struct with the right formatting for passing to the post request
 type rpcPayload struct {

@@ -1,11 +1,11 @@
-# Fork Nest for your fork of TurtleCoin
+# Fork Nest for your fork of NibbleClassic
 
-If you created your cryptonote coin by forking TurtleCoin and you want a universal desktop GUI wallet to go with it, Nest is your best choice. This guide will help you to fork Nest and adapt it to your coin.
+If you created your cryptonote coin by forking NibbleClassic and you want a universal desktop GUI wallet to go with it, Nest is your best choice. This guide will help you to fork Nest and adapt it to your coin.
 
 ## Warning
 
-I have no idea when you forked TurtleCoin and how you keep up with its development. Nor do I know all the parameters you changed and what you implemented differently compared to TurtleCoin. TurtleCoin-Nest evolves very much together with TurtleCoin. Adapting Nest will depend from coin to coin. In this guide, we do our best to identify the things to modify and places in the code to look at. But do not expect it to be one-size-fits-all. That being said, we will assume that you followed this guide to create your coin: [Forking TurtleCoin
-](https://github.com/turtlecoin/turtlecoin/wiki/Forking-Turtlecoin).
+I have no idea when you forked NibbleClassic and how you keep up with its development. Nor do I know all the parameters you changed and what you implemented differently compared to NibbleClassic. NibbleClassic-Nest evolves very much together with NibbleClassic. Adapting Nest will depend from coin to coin. In this guide, we do our best to identify the things to modify and places in the code to look at. But do not expect it to be one-size-fits-all. That being said, we will assume that you followed this guide to create your coin: [Forking NibbleClassic
+](https://github.com/NibbleClassic/NibbleClassic/wiki/Forking-NibbleClassic).
 
 Nest was not developed with the idea in mind to be easily forked for other coins (Shame on me! But sorry, I did not expect it to gather so much interest). Forking it involves a bit more than just changing some parameters in a config file. But do not worry, it is not complicated. And we will work on improving its forkability.
 
@@ -26,15 +26,15 @@ Nest is developed in Golang for the backend and Qt for the user interface. Qt is
 
 ## Forking Nest
 
-1. Go to [https://github.com/turtlecoin/turtle-wallet-go](https://github.com/turtlecoin/turtle-wallet-go) and log in to Github with your Github account.
+1. Go to [https://github.com/NibbleClassic/turtle-wallet-go](https://github.com/NibbleClassic/turtle-wallet-go) and log in to Github with your Github account.
 
 1. Click the _Fork_ button at the top right of the page. Wait for the forking process, and once done, you should be brought to the new _turtle-wallet-go_ forked repository on your Github account.
 
 1. Click _Settings_ and rename of your repository. Choose the name you want to be your Nest wallet called as. When you will build Nest, the name will be automatically taken from the name of your main folder (so the name of your repository). To avoid confusions and credit Nest, we advise to choose _MyCoin-Nest_, but you can choose whatever you want.
 
-1. Once you have changed the name of your repository, clone it on your local machine. If you forked TurtleCoin, I guess you already know how to do that. Just make sure you clone it in your _GOPATH_ (if you have installed Go and the Qt/Go binding, you now know what the _GOPATH_ is).
+1. Once you have changed the name of your repository, clone it on your local machine. If you forked NibbleClassic, I guess you already know how to do that. Just make sure you clone it in your _GOPATH_ (if you have installed Go and the Qt/Go binding, you now know what the _GOPATH_ is).
 
-1. Checkout a tag that was created around the time you forked TurtleCoin. If you forked TurtleCoin 2 months ago and did not include latest developments, there will be issues with the latest Nest as it evolved with TurtleCoin.
+1. Checkout a tag that was created around the time you forked NibbleClassic. If you forked NibbleClassic 2 months ago and did not include latest developments, there will be issues with the latest Nest as it evolved with NibbleClassic.
 
 Now, before making the necessary changes in Nest, we will build your fork to make sure everything is ok. Nevertheless there is one thing we have to edit first before being able to build.
 
@@ -42,12 +42,12 @@ Now, before making the necessary changes in Nest, we will build your fork to mak
 
 ### Main name
 
-You must modify all the occurrences of _TurtleCoin-Nest_ and _TurtleCoin Nest_ in the code by the name you chose (let's assume you chose _MyCoin-Nest_). The reason we have to do it before building is that some packages are referenced with their absolute path, and you changed the name of the main folder. Let us forget for now the files README.md and releases.md, you will do whatever you want with those files.
+You must modify all the occurrences of _NibbleClassic-Nest_ and _NibbleClassic Nest_ in the code by the name you chose (let's assume you chose _MyCoin-Nest_). The reason we have to do it before building is that some packages are referenced with their absolute path, and you changed the name of the main folder. Let us forget for now the files README.md and releases.md, you will do whatever you want with those files.
 
 - in constants.go:
 
     ```Go
-    logFileFilename             = "TurtleCoin-Nest.log"
+    logFileFilename             = "NibbleClassic-Nest.log"
     ```
 
 - in main.go:
@@ -55,14 +55,14 @@ You must modify all the occurrences of _TurtleCoin-Nest_ and _TurtleCoin Nest_ i
     in the import statement (that's the most important one):
 
     ```Go
-    "TurtleCoin-Nest/turtlecoinwalletdrpcgo"
-    "TurtleCoin-Nest/walletdmanager"
+    "NibbleClassic-Nest/nibbleclassicwalletdrpcgo"
+    "NibbleClassic-Nest/walletdmanager"
     ```
 
     and
 
     ```Go
-    pathToAppFolder := pathToHomeDir + "/Library/Application Support/TurtleCoin-Nest"
+    pathToAppFolder := pathToHomeDir + "/Library/Application Support/NibbleClassic-Nest"
     ```
 
 - in walletdmanager/walletdmanager.go:
@@ -70,13 +70,13 @@ You must modify all the occurrences of _TurtleCoin-Nest_ and _TurtleCoin Nest_ i
     in the import statement (that's also an important one):
 
     ```Go
-    "TurtleCoin-Nest/turtlecoinwalletdrpcgo"
+    "NibbleClassic-Nest/nibbleclassicwalletdrpcgo"
     ```
 
     and 2 occurences of
 
     ```Go
-    pathToAppLibDir := pathToHomeDir + "/Library/Application Support/TurtleCoin-Nest"
+    pathToAppLibDir := pathToHomeDir + "/Library/Application Support/NibbleClassic-Nest"
     ```
 
     I know, I know, this could be refactored and put in constants or config files. It will be done at some point.
@@ -84,14 +84,14 @@ You must modify all the occurrences of _TurtleCoin-Nest_ and _TurtleCoin Nest_ i
 - in qml/nestmain.qml:
 
     ```QML
-    title: "TurtleCoin Nest"
+    title: "NibbleClassic Nest"
     ```
 
-### TurtleCoin fork name
+### NibbleClassic fork name
 
-When you changed the name of your coin, you probably also modified the names of _TurtleCoind_ and _turlte-service_ (previously _walletd_). If you did so, you must also change the references of those names in Nest.
+When you changed the name of your coin, you probably also modified the names of _NibbleClassicd_ and _turlte-service_ (previously _walletd_). If you did so, you must also change the references of those names in Nest.
 
-- in walletdmanager/constants.go, change, in the strings (not the variable names), _turtle-service_ by the name you chose when you forked TurtleCoin:
+- in walletdmanager/constants.go, change, in the strings (not the variable names), _turtle-service_ by the name you chose when you forked NibbleClassic:
 
     ```Go
     logWalletdCurrentSessionFilename     = "turtle-service-session.log"
@@ -100,13 +100,13 @@ When you changed the name of your coin, you probably also modified the names of 
     walletdCommandName                   = "turtle-service"
     ```
 
-- in walletdmanager/constants.go, change, in the strings (not the variable names), _TurtleCoind_ by the name you chose when you forked TurtleCoin:
+- in walletdmanager/constants.go, change, in the strings (not the variable names), _NibbleClassicd_ by the name you chose when you forked NibbleClassic:
 
     ```Go
-    logTurtleCoindCurrentSessionFilename = "TurtleCoind-session.log"
-    logTurtleCoindAllSessionsFilename    = "TurtleCoind.log"
+    logNibbleClassicdCurrentSessionFilename = "NibbleClassicd-session.log"
+    logNibbleClassicdAllSessionsFilename    = "NibbleClassicd.log"
 
-    turtlecoindCommandName               = "TurtleCoind"
+    NibbleClassicdCommandName               = "NibbleClassicd"
     ```
 
 ## Building Nest
@@ -120,7 +120,7 @@ Now you are ready to build for testing your repo and your environment. I would a
 
     It takes around 10 seconds for the app to be built and you will see that a new subdirectory is automatically created: _deploy/*your os*/_. Your app is in that folder.
 
-1. Include the _turtle-service_ and _TurtleCoind_ builds (or however you called them) in:
+1. Include the _turtle-service_ and _NibbleClassicd_ builds (or however you called them) in:
     - Windows/Linux: in the app folder
     - Mac: in _MyCoin-Nest.app/Contents/_ (right click on the .app and click on "show package content")
 
@@ -175,18 +175,18 @@ I recommend to build and test your modifications everytime you make a change, so
 
 ### Ticker and address prefix
 
-If you followed the _Forking TurtleCoin_ guide, you probably changed the ticker and address prefix for your coin. It would be great if you just had to change one parameter in Nest to reflect that change, but it would be too easy, wouldn't it? Naaa, Nest was not built with forkability in mind, so until Nest code is refactored, you will have to modify this manually in many places.
+If you followed the _Forking NibbleClassic_ guide, you probably changed the ticker and address prefix for your coin. It would be great if you just had to change one parameter in Nest to reflect that change, but it would be too easy, wouldn't it? Naaa, Nest was not built with forkability in mind, so until Nest code is refactored, you will have to modify this manually in many places.
 
-Search for "TRTL" in the code, and everytime it is in a string, change it for your ticker.
+Search for "NBX" in the code, and everytime it is in a string, change it for your ticker.
 
 ### Address size
 
-TurtleCoin addresses are strings of 99 characters (187 for integrated addresses). If you changed those parameters, change them also in Nest code:
+NibbleClassic addresses are strings of 99 characters (187 for integrated addresses). If you changed those parameters, change them also in Nest code:
 
 - in walletdmanager/walletdmanager.go, change the "99" and "187" by the sizes of your addresses and integrated addresses respectively:
 
     ```Go
-    if !strings.HasPrefix(transferAddress, "TRTL") || (len(transferAddress) != 99 && len(transferAddress) != 187) {
+    if !strings.HasPrefix(transferAddress, "NBX") || (len(transferAddress) != 99 && len(transferAddress) != 187) {
         return "", errors.New("address is invalid")
     }
     ```
@@ -200,9 +200,9 @@ TurtleCoin addresses are strings of 99 characters (187 for integrated addresses)
 
 ### Decimal point
 
-TurtleCoin uses 2 decimal points. When you forked it, if you changed the parameter _CRYPTONOTE_DISPLAY_DECIMAL_POINT_, you should also change some pieces of code in Nest:
+NibbleClassic uses 2 decimal points. When you forked it, if you changed the parameter _CRYPTONOTE_DISPLAY_DECIMAL_POINT_, you should also change some pieces of code in Nest:
 
-- in turtlecoinwalletdrpcgo/walletdrpc.go:
+- in nibbleclassicwalletdrpcgo/walletdrpc.go:
 
     - in func RequestBalance(...), replace the two occurrences of "100" by 10 exponent the decimal points you chose. e.g. If you chose 5, divide by 100000.
 
@@ -227,7 +227,7 @@ TurtleCoin uses 2 decimal points. When you forked it, if you changed the paramet
             if err == nil {
                 qmlBridge.DisplayAvailableBalance(humanize.FormatFloat("#,###.##", walletAvailableBalance))
                 qmlBridge.DisplayLockedBalance(humanize.FormatFloat("#,###.##", walletLockedBalance))
-                balanceUSD := walletTotalBalance * rateUSDTRTL
+                balanceUSD := walletTotalBalance * rateUSDNBX
                 qmlBridge.DisplayTotalBalance(humanize.FormatFloat("#,###.##", walletTotalBalance), humanize.FormatFloat("#,###.##", balanceUSD))
             }
         }
@@ -264,13 +264,13 @@ TurtleCoin uses 2 decimal points. When you forked it, if you changed the paramet
 
 ### Mixin
 
-At different points in time (based on block height), TurtleCoin had optional mixins or minimum mixins or fixed mixins. You should choose to checkout Nest at a specific tag based on the time you forked TurtleCoin and the mixin parameters you chose.
+At different points in time (based on block height), NibbleClassic had optional mixins or minimum mixins or fixed mixins. You should choose to checkout Nest at a specific tag based on the time you forked NibbleClassic and the mixin parameters you chose.
 
 ### Other small modifications
 
 - in constants.go:
 
-    - `urlCryptoCompareTRTL`: if your coin is listed on cryptocompare.com, modify the ticker in the url, otherwise remove the exchange rate feature entirely.
+    - `urlCryptoCompareNBX`: if your coin is listed on cryptocompare.com, modify the ticker in the url, otherwise remove the exchange rate feature entirely.
 
     - `defaultRemoteDaemonAddress` and `defaultRemoteDaemonPort`: modify based on your most reliable remote node.
 
@@ -280,6 +280,6 @@ At different points in time (based on block height), TurtleCoin had optional mix
 
     - `DefaultTransferFee`: choose your default transfer fee.
 
-- in turtlecoinwalletdrpcgo/walletdrpc.go:
+- in nibbleclassicwalletdrpcgo/walletdrpc.go:
 
     - `rpcURL = "http://127.0.0.1:8070/json_rpc"`: change the port (8070) to another one if you changed that parameter.

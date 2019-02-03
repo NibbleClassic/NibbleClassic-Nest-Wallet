@@ -6,7 +6,7 @@
 package main
 
 import (
-	"TurtleCoin-Nest/walletdmanager"
+	"NibbleClassic-Nest/walletdmanager"
 
 	"github.com/atotto/clipboard"
 	_ "github.com/mattn/go-sqlite3"
@@ -107,7 +107,7 @@ type QmlBridge struct {
 		scanHeight string) `slot:"clickedButtonImport"`
 	_ func(remote bool)              `slot:"choseRemote"`
 	_ func(index int)                `slot:"selectedRemoteNode"`
-	_ func(amountTRTL string) string `slot:"getTransferAmountUSD"`
+	_ func(amountNBX string) string `slot:"getTransferAmountUSD"`
 	_ func()                         `slot:"clickedCloseSettings"`
 	_ func()                         `slot:"clickedSettingsButton"`
 	_ func(displayFiat bool)         `slot:"choseDisplayFiat"`
@@ -178,8 +178,8 @@ func connectQMLToGOFunctions() {
 		}()
 	})
 
-	qmlBridge.ConnectGetTransferAmountUSD(func(amountTRTL string) string {
-		return amountStringUSDToTRTL(amountTRTL)
+	qmlBridge.ConnectGetTransferAmountUSD(func(amountNBX string) string {
+		return amountStringUSDToNBX(amountNBX)
 	})
 
 	qmlBridge.ConnectClickedButtonBackupWallet(func() {

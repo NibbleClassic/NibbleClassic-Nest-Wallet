@@ -6,14 +6,14 @@
 package walletdmanager
 
 const (
-	// DefaultTransferFee is the default fee. It is expressed in TRTL
+	// DefaultTransferFee is the default fee. It is expressed in NBX
 	DefaultTransferFee float64 = 0.1
 
-	logWalletdCurrentSessionFilename     = "turtle-service-session.log"
-	logWalletdAllSessionsFilename        = "turtle-service.log"
-	logTurtleCoindCurrentSessionFilename = "TurtleCoind-session.log"
-	logTurtleCoindAllSessionsFilename    = "TurtleCoind.log"
+	logWalletdCurrentSessionFilename     = "nibble-service-session.log"
+	logWalletdAllSessionsFilename        = "nibble-service.log"
+	logNibbleClassicdCurrentSessionFilename = "Nibbled-session.log"
+	logNibbleClassicdAllSessionsFilename    = "Nibbled.log"
 	walletdLogLevel                      = "3" // should be at least 3 as I use some logs messages to confirm creation of wallet
-	walletdCommandName                   = "turtle-service"
-	turtlecoindCommandName               = "TurtleCoind"
+	walletdCommandName                   = "nibble-service"
+	NibbleClassicdCommandName               = "Nibbled"
 )

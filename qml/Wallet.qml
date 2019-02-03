@@ -100,7 +100,7 @@ Rectangle {
             Text {
                 id: textLockedUnit
                 color: "#cfcfcf"
-                text: "TRTL"
+                text: "NBX"
                 anchors.right: parent.right
                 anchors.rightMargin: 18
                 anchors.bottom: parent.bottom
@@ -114,7 +114,7 @@ Rectangle {
             Text {
                 id: textAvailableUnit
                 color: "#cfcfcf"
-                text: "TRTL"
+                text: "NBX"
                 font.family: "Arial"
                 font.pixelSize: 15
                 anchors.right: textLockedUnit.right
@@ -229,7 +229,7 @@ Rectangle {
         Text {
             id: textBalanceUnit
             color: "#ffffff"
-            text: "TRTL"
+            text: "NBX"
             verticalAlignment: Text.AlignBottom
             anchors.left: textBalanceValue.right
             anchors.leftMargin: 15
@@ -396,7 +396,7 @@ Rectangle {
         Text {
             id: textDescrCopyAddress
             color: "#858585"
-            text: "Copy your address to receive TRTL"
+            text: "Copy your address to receive NBX"
             anchors.verticalCenter: buttonCopy.verticalCenter
             anchors.right: buttonCopy.left
             anchors.rightMargin: 15
@@ -800,7 +800,7 @@ Rectangle {
         Text {
             id: textTransferAmountUnit
             color: "#999999"
-            text: "TRTL"
+            text: "NBX"
             anchors.verticalCenter: rectangleTextInputTransferAmount.verticalCenter
             horizontalAlignment: Text.AlignLeft
             font.pixelSize: 14
@@ -967,7 +967,7 @@ Rectangle {
         Text {
             id: textTransferFeeUnit
             color: "#999999"
-            text: "TRTL"
+            text: "NBX"
             anchors.verticalCenter: rectangleTextInputTransferFee.verticalCenter
             horizontalAlignment: Text.AlignLeft
             font.pixelSize: 14
@@ -1024,7 +1024,7 @@ Rectangle {
         Text {
             id: textNodeFeeUnit
             color: "#999999"
-            text: "TRTL / tr."
+            text: "NBX / tr."
             font.pixelSize: 14
             font.family: "Arial"
             font.bold: true
@@ -1075,7 +1075,7 @@ Rectangle {
                     rectangleTransfer.transferPaymentID = "";
                 }
                 rectangleTransfer.transferFee = textInputTransferFee.text
-                dialogConfirmTransfer.show(rectangleTransfer.transferRecipient, rectangleTransfer.transferAmount + " TRTL + " + rectangleTransfer.transferFee + " (fee) + " + rectangleTransfer.nodeFeeValue + " (node fee)", rectangleTransfer.transferPaymentID);
+                dialogConfirmTransfer.show(rectangleTransfer.transferRecipient, rectangleTransfer.transferAmount + " NBX + " + rectangleTransfer.transferFee + " (fee) + " + rectangleTransfer.nodeFeeValue + " (node fee)", rectangleTransfer.transferPaymentID);
             }
         }
 

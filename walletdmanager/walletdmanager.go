@@ -7,7 +7,7 @@
 package walletdmanager
 
 import (
-	"TurtleCoin-Nest/turtlecoinwalletdrpcgo"
+	"NibbleClassic-Nest/nibbleclassicwalletdrpcgo"
 	"bufio"
 	"io"
 	"math/rand"
@@ -39,7 +39,7 @@ var (
 	rpcPassword = ""
 
 	cmdWalletd     *exec.Cmd
-	cmdTurtleCoind *exec.Cmd
+	cmdNibbleClassicd *exec.Cmd
 
 	// WalletdOpenAndRunning is true when turtle-service is running with a wallet open
 	WalletdOpenAndRunning = false
@@ -78,7 +78,7 @@ func Setup(platform string) {
 // RequestBalance provides the available and locked balances of the current wallet
 func RequestBalance() (availableBalance float64, lockedBalance float64, totalBalance float64, err error) {
 
-	availableBalance, lockedBalance, totalBalance, err = turtlecoinwalletdrpcgo.RequestBalance(rpcPassword)
+	availableBalance, lockedBalance, totalBalance, err = nibbleclassicwalletdrpcgo.RequestBalance(rpcPassword)
 	if err != nil {
 		log.Error("error requesting balances. err: ", err)
 	} else {
@@ -95,7 +95,7 @@ func RequestAvailableBalanceToBeSpent(transferFeeString string) (availableBalanc
 		return 0, err
 	}
 
-	transferFee, err := strconv.ParseFloat(transferFeeString, 64) // transferFee is expressed in TRTL
+	transferFee, err := strconv.ParseFloat(transferFeeString, 64) // transferFee is expressed in NBX
 	if err != nil {
 		return 0, errors.New("fee is invalid")
 	}
@@ -115,7 +115,7 @@ func RequestAvailableBalanceToBeSpent(transferFeeString string) (availableBalanc
 // RequestAddress provides the address of the current wallet
 func RequestAddress() (address string, err error) {
 
-	address, err = turtlecoinwalletdrpcgo.RequestAddress(rpcPassword)
+	address, err = nibbleclassicwalletdrpcgo.RequestAddress(rpcPassword)
 	if err != nil {
 		log.Error("error requesting address. err: ", err)
 	} else {
@@ -125,15 +125,15 @@ func RequestAddress() (address string, err error) {
 }
 
 // RequestListTransactions provides the list of transactions of current wallet
-func RequestListTransactions() (transfers []turtlecoinwalletdrpcgo.Transfer, err error) {
+func RequestListTransactions() (transfers []nibbleclassicwalletdrpcgo.Transfer, err error) {
 
-	walletBlockCount, _, _, _, err := turtlecoinwalletdrpcgo.RequestStatus(rpcPassword)
+	walletBlockCount, _, _, _, err := nibbleclassicwalletdrpcgo.RequestStatus(rpcPassword)
 	if err != nil {
 		log.Error("error getting block count: ", err)
 		return nil, err
 	}
 
-	transfers, err = turtlecoinwalletdrpcgo.RequestListTransactions(walletBlockCount, 1, []string{WalletAddress}, rpcPassword)
+	transfers, err = nibbleclassicwalletdrpcgo.RequestListTransactions(walletBlockCount, 1, []string{WalletAddress}, rpcPassword)
 	if err != nil {
 		log.Error("error requesting list transactions. err: ", err)
 	}
@@ -147,7 +147,7 @@ func SendTransaction(transferAddress string, transferAmountString string, transf
 		return "", errors.New("wallet and/or blockchain not fully synced yet")
 	}
 
-	if !strings.HasPrefix(transferAddress, "TRTL") || (len(transferAddress) != 99 && len(transferAddress) != 187) {
+	if !strings.HasPrefix(transferAddress, "NBX") || (len(transferAddress) != 99 && len(transferAddress) != 187) {
 		return "", errors.New("address is invalid")
 	}
 
@@ -155,16 +155,16 @@ func SendTransaction(transferAddress string, transferAmountString string, transf
 		return "", errors.New("sending to yourself is not supported")
 	}
 
-	transferAmount, err := strconv.ParseFloat(transferAmountString, 64) // transferAmount is expressed in TRTL
+	transferAmount, err := strconv.ParseFloat(transferAmountString, 64) // transferAmount is expressed in NBX
 	if err != nil {
 		return "", errors.New("amount is invalid")
 	}
 
 	if transferAmount <= 0 {
-		return "", errors.New("amount of TRTL to be sent should be greater than 0")
+		return "", errors.New("amount of NBX to be sent should be greater than 0")
 	}
 
-	transferFee, err := strconv.ParseFloat(transferFeeString, 64) // transferFee is expressed in TRTL
+	transferFee, err := strconv.ParseFloat(transferFeeString, 64) // transferFee is expressed in NBX
 	if err != nil {
 		return "", errors.New("fee is invalid")
 	}
@@ -177,7 +177,7 @@ func SendTransaction(transferAddress string, transferAmountString string, transf
 		return "", errors.New("your available balance is insufficient")
 	}
 
-	transactionHash, err = turtlecoinwalletdrpcgo.SendTransaction(transferAddress, transferAmount, transferPaymentID, transferFee, rpcPassword)
+	transactionHash, err = nibbleclassicwalletdrpcgo.SendTransaction(transferAddress, transferAmount, transferPaymentID, transferFee, rpcPassword)
 	if err != nil {
 		log.Error("error sending transaction. err: ", err)
 		return "", err
@@ -193,7 +193,7 @@ func OptimizeWalletWithFusion() (transactionHash string, err error) {
 		return "", errors.Wrap(err, "getOptimisedFusionParameters failed")
 	}
 
-	transactionHash, err = turtlecoinwalletdrpcgo.SendFusionTransaction(smallestOptimizedThreshold, []string{WalletAddress}, WalletAddress, rpcPassword)
+	transactionHash, err = nibbleclassicwalletdrpcgo.SendFusionTransaction(smallestOptimizedThreshold, []string{WalletAddress}, WalletAddress, rpcPassword)
 	if err != nil {
 		log.Error("error sending fusion transaction. err: ", err)
 		return "", errors.Wrap(err, "sending fusion transaction failed")
@@ -210,7 +210,7 @@ func getOptimisedFusionParameters() (largestFusionReadyCount int, smallestOptimi
 	smallestOptimizedThreshold = threshold
 
 	for {
-		fusionReadyCount, _, err := turtlecoinwalletdrpcgo.EstimateFusion(threshold, []string{WalletAddress}, rpcPassword)
+		fusionReadyCount, _, err := nibbleclassicwalletdrpcgo.EstimateFusion(threshold, []string{WalletAddress}, rpcPassword)
 		if err != nil {
 			log.Error("error estimating fusion. err: ", err)
 			return 0, 0, err
@@ -231,19 +231,19 @@ func getOptimisedFusionParameters() (largestFusionReadyCount int, smallestOptimi
 // GetPrivateKeys provides the private view and spend keys of the current wallet, and the mnemonic seed if the wallet is deterministic
 func GetPrivateKeys() (isDeterministicWallet bool, mnemonicSeed string, privateViewKey string, privateSpendKey string, err error) {
 
-	isDeterministicWallet, mnemonicSeed, err = turtlecoinwalletdrpcgo.GetMnemonicSeed(WalletAddress, rpcPassword)
+	isDeterministicWallet, mnemonicSeed, err = nibbleclassicwalletdrpcgo.GetMnemonicSeed(WalletAddress, rpcPassword)
 	if err != nil {
 		log.Error("error requesting mnemonic seed. err: ", err)
 		return false, "", "", "", err
 	}
 
-	privateViewKey, err = turtlecoinwalletdrpcgo.GetViewKey(rpcPassword)
+	privateViewKey, err = nibbleclassicwalletdrpcgo.GetViewKey(rpcPassword)
 	if err != nil {
 		log.Error("error requesting view key. err: ", err)
 		return false, "", "", "", err
 	}
 
-	privateSpendKey, _, err = turtlecoinwalletdrpcgo.GetSpendKeys(WalletAddress, rpcPassword)
+	privateSpendKey, _, err = nibbleclassicwalletdrpcgo.GetSpendKeys(WalletAddress, rpcPassword)
 	if err != nil {
 		log.Error("error requesting spend keys. err: ", err)
 		return false, "", "", "", err
@@ -255,7 +255,7 @@ func GetPrivateKeys() (isDeterministicWallet bool, mnemonicSeed string, privateV
 // SaveWallet saves the sync status of the wallet. To be done regularly so when turtle-service crashes, sync is not lost
 func SaveWallet() (err error) {
 
-	err = turtlecoinwalletdrpcgo.SaveWallet(rpcPassword)
+	err = nibbleclassicwalletdrpcgo.SaveWallet(rpcPassword)
 	if err != nil {
 		log.Error("error saving wallet. err: ", err)
 		return err
@@ -268,7 +268,7 @@ func SaveWallet() (err error) {
 // walletPath is the full path to the wallet
 // walletPassword is the wallet password
 // useRemoteNode is true if remote node, false if local
-// useCheckpoints is true if TurtleCoind should be run with "--load-checkpoints"
+// useCheckpoints is true if NibbleClassicd should be run with "--load-checkpoints"
 func StartWalletd(walletPath string, walletPassword string, useRemoteNode bool, useCheckpoints bool, daemonAddress string, daemonPort string) (err error) {
 
 	if isWalletdRunning() {
@@ -296,11 +296,11 @@ func StartWalletd(walletPath string, walletPassword string, useRemoteNode bool, 
 
 	pathToLogWalletdCurrentSession := logsFolder + directorySeparator + logWalletdCurrentSessionFilename
 	pathToLogWalletdAllSessions := logsFolder + directorySeparator + logWalletdAllSessionsFilename
-	pathToLogTurtleCoindCurrentSession := logsFolder + directorySeparator + logTurtleCoindCurrentSessionFilename
-	pathToLogTurtleCoindAllSessions := logsFolder + directorySeparator + logTurtleCoindAllSessionsFilename
+	pathToLogNibbleClassicdCurrentSession := logsFolder + directorySeparator + logNibbleClassicdCurrentSessionFilename
+	pathToLogNibbleClassicdAllSessions := logsFolder + directorySeparator + logNibbleClassicdAllSessionsFilename
 
 	pathToWalletd := "./" + walletdCommandName
-	pathToTurtleCoind := "./" + turtlecoindCommandName
+	pathToNibbleClassicd := "./" + NibbleClassicdCommandName
 	checkpointsCSVFile := "checkpoints.csv"
 	pathToCheckpointsCSV := "./" + checkpointsCSVFile
 
@@ -321,7 +321,7 @@ func StartWalletd(walletPath string, walletPassword string, useRemoteNode bool, 
 	if isPlatformDarwin {
 		pathToAppContents := filepath.Dir(pathToAppDirectory)
 		pathToWalletd = pathToAppContents + "/" + walletdCommandName
-		pathToTurtleCoind = pathToAppContents + "/" + turtlecoindCommandName
+		pathToNibbleClassicd = pathToAppContents + "/" + NibbleClassicdCommandName
 		pathToCheckpointsCSV = pathToAppContents + "/" + checkpointsCSVFile
 
 		usr, err := user.Current()
@@ -329,12 +329,12 @@ func StartWalletd(walletPath string, walletPassword string, useRemoteNode bool, 
 			log.Fatal("error finding home directory. Error: ", err)
 		}
 		pathToHomeDir := usr.HomeDir
-		pathToAppLibDir := pathToHomeDir + "/Library/Application Support/TurtleCoin-Nest"
+		pathToAppLibDir := pathToHomeDir + "/Library/Application Support/NibbleClassic-Nest"
 
 		pathToLogWalletdCurrentSession = pathToAppLibDir + "/" + pathToLogWalletdCurrentSession
 		pathToLogWalletdAllSessions = pathToAppLibDir + "/" + pathToLogWalletdAllSessions
-		pathToLogTurtleCoindCurrentSession = pathToAppLibDir + "/" + pathToLogTurtleCoindCurrentSession
-		pathToLogTurtleCoindAllSessions = pathToAppLibDir + "/" + pathToLogTurtleCoindAllSessions
+		pathToLogNibbleClassicdCurrentSession = pathToAppLibDir + "/" + pathToLogNibbleClassicdCurrentSession
+		pathToLogNibbleClassicdAllSessions = pathToAppLibDir + "/" + pathToLogNibbleClassicdAllSessions
 
 		if pathToWallet == WalletFilename {
 			// if comes from createWallet, so it is not a full path, just a filename
@@ -342,12 +342,12 @@ func StartWalletd(walletPath string, walletPassword string, useRemoteNode bool, 
 		}
 	} else if isPlatformLinux {
 		pathToWalletd = pathToAppDirectory + "/" + walletdCommandName
-		pathToTurtleCoind = pathToAppDirectory + "/" + turtlecoindCommandName
+		pathToNibbleClassicd = pathToAppDirectory + "/" + NibbleClassicdCommandName
 		pathToCheckpointsCSV = pathToAppDirectory + "/" + checkpointsCSVFile
 		pathToLogWalletdCurrentSession = pathToAppDirectory + "/" + pathToLogWalletdCurrentSession
 		pathToLogWalletdAllSessions = pathToAppDirectory + "/" + pathToLogWalletdAllSessions
-		pathToLogTurtleCoindCurrentSession = pathToAppDirectory + "/" + pathToLogTurtleCoindCurrentSession
-		pathToLogTurtleCoindAllSessions = pathToAppDirectory + "/" + pathToLogTurtleCoindAllSessions
+		pathToLogNibbleClassicdCurrentSession = pathToAppDirectory + "/" + pathToLogNibbleClassicdCurrentSession
+		pathToLogNibbleClassicdAllSessions = pathToAppDirectory + "/" + pathToLogNibbleClassicdAllSessions
 		if pathToWallet == WalletFilename {
 			// if comes from createWallet, so it is not a full path, just a filename
 			pathToWallet = pathToAppDirectory + "/" + pathToWallet
@@ -363,7 +363,7 @@ func StartWalletd(walletPath string, walletPassword string, useRemoteNode bool, 
 
 	rpcPassword = randStringBytesMaskImprSrc(20)
 
-	var turtleCoindCurrentSessionLogFile *os.File
+	var NibbleClassicdCurrentSessionLogFile *os.File
 
 	if useRemoteNode {
 		cmdWalletd = exec.Command(pathToWalletd, "-w", pathToWallet, "-p", walletPassword, "--log-file", pathToLogWalletdCurrentSession, "--daemon-address", daemonAddress, "--daemon-port", daemonPort, "--log-level", walletdLogLevel, "--rpc-password", rpcPassword)
@@ -372,54 +372,54 @@ func StartWalletd(walletPath string, walletPassword string, useRemoteNode bool, 
 	}
 	hideCmdWindowIfNeeded(cmdWalletd)
 
-	if !useRemoteNode && !isTurtleCoindRunning() {
+	if !useRemoteNode && !isNibbleClassicdRunning() {
 
-		turtleCoindCurrentSessionLogFile, err = os.Create(pathToLogTurtleCoindCurrentSession)
+		NibbleClassicdCurrentSessionLogFile, err = os.Create(pathToLogNibbleClassicdCurrentSession)
 		if err != nil {
 			log.Error(err)
 		}
-		defer turtleCoindCurrentSessionLogFile.Close()
+		defer NibbleClassicdCurrentSessionLogFile.Close()
 
 		if useCheckpoints {
-			cmdTurtleCoind = exec.Command(pathToTurtleCoind, "--load-checkpoints", pathToCheckpointsCSV, "--log-file", pathToLogTurtleCoindCurrentSession)
+			cmdNibbleClassicd = exec.Command(pathToNibbleClassicd, "--load-checkpoints", pathToCheckpointsCSV, "--log-file", pathToLogNibbleClassicdCurrentSession)
 		} else {
-			cmdTurtleCoind = exec.Command(pathToTurtleCoind, "--log-file", pathToLogTurtleCoindCurrentSession)
+			cmdNibbleClassicd = exec.Command(pathToNibbleClassicd, "--log-file", pathToLogNibbleClassicdCurrentSession)
 		}
-		hideCmdWindowIfNeeded(cmdTurtleCoind)
+		hideCmdWindowIfNeeded(cmdNibbleClassicd)
 
-		turtleCoindAllSessionsLogFile, err := os.OpenFile(pathToLogTurtleCoindAllSessions, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+		NibbleClassicdAllSessionsLogFile, err := os.OpenFile(pathToLogNibbleClassicdAllSessions, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 		if err != nil {
 			log.Error(err)
 		}
-		cmdTurtleCoind.Stdout = turtleCoindAllSessionsLogFile
-		defer turtleCoindAllSessionsLogFile.Close()
+		cmdNibbleClassicd.Stdout = NibbleClassicdAllSessionsLogFile
+		defer NibbleClassicdAllSessionsLogFile.Close()
 
-		err = cmdTurtleCoind.Start()
+		err = cmdNibbleClassicd.Start()
 		if err != nil {
 			log.Error(err)
 			return err
 		}
 
-		log.Info("Opening TurtleCoind and waiting for it to be ready.")
+		log.Info("Opening NibbleClassicd and waiting for it to be ready.")
 
-		readerTurtleCoindLog := bufio.NewReader(turtleCoindCurrentSessionLogFile)
+		readerNibbleClassicdLog := bufio.NewReader(NibbleClassicdCurrentSessionLogFile)
 
 		for {
-			line, err := readerTurtleCoindLog.ReadString('\n')
+			line, err := readerNibbleClassicdLog.ReadString('\n')
 			if err != nil {
 				if err != io.EOF {
-					log.Error("Failed reading TurtleCoind log file line by line: ", err)
+					log.Error("Failed reading NibbleClassicd log file line by line: ", err)
 				}
 			}
 			if strings.Contains(line, "Imported block with index") {
-				log.Info("TurtleCoind importing blocks: ", line)
+				log.Info("NibbleClassicd importing blocks: ", line)
 			}
 			if strings.Contains(line, "Core rpc server started ok") {
-				log.Info("TurtleCoind ready (rpc server started ok).")
+				log.Info("NibbleClassicd ready (rpc server started ok).")
 				break
 			}
 			if strings.Contains(line, "Node stopped.") {
-				errorMessage := "Error TurtleCoind: 'Node stopped'"
+				errorMessage := "Error NibbleClassicd: 'Node stopped'"
 				log.Error(errorMessage)
 				return errors.New(errorMessage)
 			}
@@ -492,7 +492,7 @@ func StartWalletd(walletPath string, walletPassword string, useRemoteNode bool, 
 	}
 
 	// check rpc connection with walletd
-	_, _, _, _, err = turtlecoinwalletdrpcgo.RequestStatus(rpcPassword)
+	_, _, _, _, err = nibbleclassicwalletdrpcgo.RequestStatus(rpcPassword)
 	if err != nil {
 		killWalletd()
 		return errors.New("error communicating with turtle-service via rpc")
@@ -513,7 +513,7 @@ func GracefullyQuitWalletd() {
 
 		if isPlatformWindows {
 			// because syscall.SIGTERM does not work in windows. We have to manually save the wallet, as we kill walletd.
-			turtlecoinwalletdrpcgo.SaveWallet(rpcPassword)
+			nibbleclassicwalletdrpcgo.SaveWallet(rpcPassword)
 			time.Sleep(3 * time.Second)
 
 			err = cmdWalletd.Process.Kill()
@@ -577,43 +577,43 @@ func killWalletd() {
 	}
 }
 
-// GracefullyQuitTurtleCoind stops the TurtleCoind daemon
-func GracefullyQuitTurtleCoind() {
+// GracefullyQuitNibbleClassicd stops the NibbleClassicd daemon
+func GracefullyQuitNibbleClassicd() {
 
-	if cmdTurtleCoind != nil {
+	if cmdNibbleClassicd != nil {
 		var err error
 
 		if isPlatformWindows {
-			// because syscall.SIGTERM does not work in windows. We have to kill TurtleCoind.
+			// because syscall.SIGTERM does not work in windows. We have to kill NibbleClassicd.
 
-			err = cmdTurtleCoind.Process.Kill()
+			err = cmdNibbleClassicd.Process.Kill()
 			if err != nil {
-				log.Error("failed to kill TurtleCoind: " + err.Error())
+				log.Error("failed to kill NibbleClassicd: " + err.Error())
 			} else {
-				log.Info("TurtleCoind killed without error")
+				log.Info("NibbleClassicd killed without error")
 			}
 		} else {
-			_ = cmdTurtleCoind.Process.Signal(syscall.SIGTERM)
+			_ = cmdNibbleClassicd.Process.Signal(syscall.SIGTERM)
 			done := make(chan error, 1)
 			go func() {
-				done <- cmdTurtleCoind.Wait()
+				done <- cmdNibbleClassicd.Wait()
 			}()
 			select {
 			case <-time.After(5 * time.Second):
-				if err := cmdTurtleCoind.Process.Kill(); err != nil {
-					log.Warning("failed to kill TurtleCoind: " + err.Error())
+				if err := cmdNibbleClassicd.Process.Kill(); err != nil {
+					log.Warning("failed to kill NibbleClassicd: " + err.Error())
 				}
-				log.Info("TurtleCoind killed as stopping process timed out")
+				log.Info("NibbleClassicd killed as stopping process timed out")
 			case err := <-done:
 				if err != nil {
-					log.Warning("TurtleCoind finished with error: " + err.Error())
+					log.Warning("NibbleClassicd finished with error: " + err.Error())
 				}
-				log.Info("TurtleCoind killed without error")
+				log.Info("NibbleClassicd killed without error")
 			}
 		}
 	}
 
-	cmdTurtleCoind = nil
+	cmdNibbleClassicd = nil
 }
 
 // CreateWallet calls turtle-service to create a new wallet. If privateViewKey, privateSpendKey and mnemonicSeed are empty strings, a new wallet will be generated. If they are not empty, a wallet will be generated from those keys or from the seed (import)
@@ -675,7 +675,7 @@ func CreateWallet(walletFilename string, walletPassword string, walletPasswordCo
 			log.Fatal("error finding home directory. Error: ", err)
 		}
 		pathToHomeDir := usr.HomeDir
-		pathToAppLibDir := pathToHomeDir + "/Library/Application Support/TurtleCoin-Nest"
+		pathToAppLibDir := pathToHomeDir + "/Library/Application Support/NibbleClassic-Nest"
 
 		pathToLogWalletdCurrentSession = pathToAppLibDir + "/" + pathToLogWalletdCurrentSession
 		pathToLogWalletdAllSessions = pathToAppLibDir + "/" + pathToLogWalletdAllSessions
@@ -797,7 +797,7 @@ func CreateWallet(walletFilename string, walletPassword string, walletPasswordCo
 // RequestConnectionInfo provides the blockchain sync status and the number of connected peers
 func RequestConnectionInfo() (syncing string, walletBlockCount int, knownBlockCount int, localDaemonBlockCount int, peerCount int, err error) {
 
-	walletBlockCount, knownBlockCount, localDaemonBlockCount, peerCount, err = turtlecoinwalletdrpcgo.RequestStatus(rpcPassword)
+	walletBlockCount, knownBlockCount, localDaemonBlockCount, peerCount, err = nibbleclassicwalletdrpcgo.RequestStatus(rpcPassword)
 	if err != nil {
 		return "", 0, 0, 0, 0, err
 	}
@@ -821,7 +821,7 @@ func RequestConnectionInfo() (syncing string, walletBlockCount int, knownBlockCo
 // RequestFeeinfo provides the additional fee requested by the remote node for each transaction
 func RequestFeeinfo() (nodeFee float64, err error) {
 
-	_, nodeFee, _, err = turtlecoinwalletdrpcgo.GetFeeInfo(rpcPassword)
+	_, nodeFee, _, err = nibbleclassicwalletdrpcgo.GetFeeInfo(rpcPassword)
 	if err != nil {
 		return 0, err
 	}
@@ -891,14 +891,14 @@ func isWalletdRunning() bool {
 	return false
 }
 
-func isTurtleCoindRunning() bool {
+func isNibbleClassicdRunning() bool {
 
-	if _, _, err := findProcess(turtlecoindCommandName); err == nil {
+	if _, _, err := findProcess(NibbleClassicdCommandName); err == nil {
 		return true
 	}
 
 	if isPlatformWindows {
-		if _, _, err := findProcess(turtlecoindCommandName + ".exe"); err == nil {
+		if _, _, err := findProcess(NibbleClassicdCommandName + ".exe"); err == nil {
 			return true
 		}
 	}
