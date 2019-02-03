@@ -32,8 +32,8 @@ Send NBX, invalid payment id | error: wrong payment id format
 Send NBX, valid payment id | popup NBX sent. amount is received on the other end with correct payment id
 Send NBX, valid integrated address | popup NBX sent. amount is received on the other end with correct payment id from integrated address
 Select the option local blockchain, restart | local blockchain should still be selected
-Open wallet with local blockchain selected and NibbleClassicd started before | NibbleClassicd should not be started automatically and should not close after wallet is closed
-Open wallet with local blockchain selected and NibbleClassicd not started before | NibbleClassicd should start automatically and should close after Nest is closed
+Open wallet with local blockchain selected and Nibbled started before | Nibbled should not be started automatically and should not close after wallet is closed
+Open wallet with local blockchain selected and Nibbled not started before | Nibbled should start automatically and should close after Nest is closed
 Test using the wallet with local blockchain selected | 
 Test using the wallet with remote node selected |
 Reduce window height and test scrolling |
@@ -45,7 +45,7 @@ Display in USD enabled -> Open a wallet| Balance is displayed in USD (under NBX 
 Display in USD enabled -> type an amount to be transfered| Value is displayed in USD
 Settings: change remote node address and port -> click save -> close and reopen Nest | new address in remote node radio button and in settings
 Settings: click remote node reset to default -> close and reopen Nest | default address in remote node radio button and in settings
-Win only: open a wallet | no black window (turtle-service) should open next to the nest window
+Win only: open a wallet | no black window (nibble-service) should open next to the nest window
 Win & Mac only: check executable file | its icon is the nest icon
 Win & Mac only: launch nest | icon in taskbar should be nest icon
 Launch on a small screen or resolution (800 x 600) | possibility to click full screen and to scroll in the full window
@@ -68,5 +68,5 @@ If send transaction with size too large, proposed to do fusion -> click fusion |
 
 - Version number
 - No log.Debug remaining
-- NibbleClassicd and turtle-service included in the bundle
-- latest checkpoint csv included in the bundle (same location as NibbleClassicd)
+- Nibbled and nibble-service included in the bundle
+- latest checkpoint csv included in the bundle (same location as Nibbled)

@@ -89,24 +89,24 @@ You must modify all the occurrences of _NibbleClassic-Nest_ and _NibbleClassic N
 
 ### NibbleClassic fork name
 
-When you changed the name of your coin, you probably also modified the names of _NibbleClassicd_ and _turlte-service_ (previously _walletd_). If you did so, you must also change the references of those names in Nest.
+When you changed the name of your coin, you probably also modified the names of _Nibbled_ and _turlte-service_ (previously _walletd_). If you did so, you must also change the references of those names in Nest.
 
-- in walletdmanager/constants.go, change, in the strings (not the variable names), _turtle-service_ by the name you chose when you forked NibbleClassic:
+- in walletdmanager/constants.go, change, in the strings (not the variable names), _nibble-service_ by the name you chose when you forked NibbleClassic:
 
     ```Go
-    logWalletdCurrentSessionFilename     = "turtle-service-session.log"
-    logWalletdAllSessionsFilename        = "turtle-service.log"
+    logWalletdCurrentSessionFilename     = "nibble-service-session.log"
+    logWalletdAllSessionsFilename        = "nibble-service.log"
 
-    walletdCommandName                   = "turtle-service"
+    walletdCommandName                   = "nibble-service"
     ```
 
-- in walletdmanager/constants.go, change, in the strings (not the variable names), _NibbleClassicd_ by the name you chose when you forked NibbleClassic:
+- in walletdmanager/constants.go, change, in the strings (not the variable names), _Nibbled_ by the name you chose when you forked NibbleClassic:
 
     ```Go
-    logNibbleClassicdCurrentSessionFilename = "NibbleClassicd-session.log"
-    logNibbleClassicdAllSessionsFilename    = "NibbleClassicd.log"
+    logNibbledCurrentSessionFilename = "Nibbled-session.log"
+    logNibbledAllSessionsFilename    = "Nibbled.log"
 
-    NibbleClassicdCommandName               = "NibbleClassicd"
+    NibbledCommandName               = "Nibbled"
     ```
 
 ## Building Nest
@@ -120,7 +120,7 @@ Now you are ready to build for testing your repo and your environment. I would a
 
     It takes around 10 seconds for the app to be built and you will see that a new subdirectory is automatically created: _deploy/*your os*/_. Your app is in that folder.
 
-1. Include the _turtle-service_ and _NibbleClassicd_ builds (or however you called them) in:
+1. Include the _nibble-service_ and _Nibbled_ builds (or however you called them) in:
     - Windows/Linux: in the app folder
     - Mac: in _MyCoin-Nest.app/Contents/_ (right click on the .app and click on "show package content")
 

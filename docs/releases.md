@@ -4,8 +4,8 @@
 
 ### Release notes
 
-- Updated to patch for CLI argument discrepancies in turtle-service
-- Includes NibbleClassic core 0.12.0 (turtle-service and NibbleClassicd) and checkpoints.csv as of 12th of January 2019.
+- Updated to patch for CLI argument discrepancies in nibble-service
+- Includes NibbleClassic core 0.12.0 (nibble-service and Nibbled) and checkpoints.csv as of 12th of January 2019.
 
 ## 0.36
 
@@ -17,7 +17,7 @@
 - Display nodes fees in list of remote nodes.
 - Move log files into a log folder.
 - Various small improvements.
-- Includes NibbleClassic core 0.8.4 (turtle-service and NibbleClassicd) and checkpoints.csv as of 29th of October 2018.
+- Includes NibbleClassic core 0.8.4 (nibble-service and Nibbled) and checkpoints.csv as of 29th of October 2018.
 
 ### Sha256
 
@@ -37,7 +37,7 @@ NibbleClassic-Nest-0.36-Linux.tar.gz:
 - Dropdown list for choosing a remote node (list is requested from https://github.com/NibbleClassic/NibbleClassic-nodes-json).
 - Can use checkpoints for syncing local chain (includes checkpoints.csv as of 3rd of October 2018).
 - Various small improvements.
-- Includes NibbleClassic core 0.8.3 (turtle-service and NibbleClassicd).
+- Includes NibbleClassic core 0.8.3 (nibble-service and Nibbled).
 
 ### Sha256
 
@@ -56,7 +56,7 @@ NibbleClassic-Nest-0.35-Linux.tar.gz:
 
 - Address directory (save the addresses you use often).
 - Choose a block height (scan height) for importing a wallet.
-- Includes NibbleClassic core 0.8.3 (turtle-service and NibbleClassicd).
+- Includes NibbleClassic core 0.8.3 (nibble-service and Nibbled).
 
 ### Sha256
 
@@ -75,7 +75,7 @@ NibbleClassic-Nest-0.34-Linux.tar.gz:
 
 - Compatibility with new fees from remote nodes (if you connect to a remote node, the node can charge you a fee per transaction, as a compensation for their running costs).
 - Compatibility with core 0.8.0
-- Uses turtle-service and NibbleClassicd 0.8.0.
+- Uses nibble-service and Nibbled 0.8.0.
 
 ### Sha256
 
@@ -96,9 +96,9 @@ NibbleClassic-Nest-0.32-Linux.tar.gz:
 - Possibility to send to integrated addresses
 - Fixed resolution on high res screens on Windows
 - Added scrollbar when window is smaller than nominal height
-- Uses turtle-service and NibbleClassicd 0.7.0.
+- Uses nibble-service and Nibbled 0.7.0.
 
-Regarding the local blockchain option: NibbleClassicd will be launched in the background if you did not launch it manually. Some difficulties can arise, please check the different log files to understand the problem (especially NibbleClassicd-session.log) or ask some help in the discord. You will also avoid issues if you launch NibbleClassicd manually before launching Nest (and potentially wait for sync). Please tell us if you have issues so we can improve for the next release. 
+Regarding the local blockchain option: Nibbled will be launched in the background if you did not launch it manually. Some difficulties can arise, please check the different log files to understand the problem (especially Nibbled-session.log) or ask some help in the discord. You will also avoid issues if you launch Nibbled manually before launching Nest (and potentially wait for sync). Please tell us if you have issues so we can improve for the next release. 
 
 ### Sha256
 

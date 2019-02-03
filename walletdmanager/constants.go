@@ -11,9 +11,9 @@ const (
 
 	logWalletdCurrentSessionFilename     = "nibble-service-session.log"
 	logWalletdAllSessionsFilename        = "nibble-service.log"
-	logNibbleClassicdCurrentSessionFilename = "Nibbled-session.log"
-	logNibbleClassicdAllSessionsFilename    = "Nibbled.log"
+	logNibbledCurrentSessionFilename = "Nibbled-session.log"
+	logNibbledAllSessionsFilename    = "Nibbled.log"
 	walletdLogLevel                      = "3" // should be at least 3 as I use some logs messages to confirm creation of wallet
 	walletdCommandName                   = "nibble-service"
-	NibbleClassicdCommandName               = "Nibbled"
+	NibbledCommandName               = "Nibbled"
 )

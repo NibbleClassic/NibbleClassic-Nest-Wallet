@@ -3,7 +3,7 @@
 // Please see the included LICENSE file for more information.
 //
 
-// Package nibbleclassicwalletdrpcgo handles the the rpc connection between your app and turtle-service
+// Package nibbleclassicwalletdrpcgo handles the the rpc connection between your app and nibble-service
 package nibbleclassicwalletdrpcgo
 
 import (
@@ -117,7 +117,7 @@ func RequestListTransactions(blockCount int, firstBlockIndex int, addresses []st
 	return transfers, nil
 }
 
-// RequestStatus requests turtle-service connection and sync status
+// RequestStatus requests nibble-service connection and sync status
 func RequestStatus(rpcPassword string) (walletBlockCount int, knownBlockCount int, localDaemonBlockCount int, peerCount int, err error) {
 
 	args := make(map[string]interface{})

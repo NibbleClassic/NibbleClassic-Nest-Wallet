@@ -35,13 +35,13 @@ var (
 	// WalletFilename is the filename of the opened wallet
 	WalletFilename = ""
 
-	// will be set to a random string when starting turtle-service
+	// will be set to a random string when starting nibble-service
 	rpcPassword = ""
 
 	cmdWalletd     *exec.Cmd
-	cmdNibbleClassicd *exec.Cmd
+	cmdNibbled *exec.Cmd
 
-	// WalletdOpenAndRunning is true when turtle-service is running with a wallet open
+	// WalletdOpenAndRunning is true when nibble-service is running with a wallet open
 	WalletdOpenAndRunning = false
 
 	// WalletdSynced is true when wallet is synced and transfer is allowed
@@ -252,7 +252,7 @@ func GetPrivateKeys() (isDeterministicWallet bool, mnemonicSeed string, privateV
 	return isDeterministicWallet, mnemonicSeed, privateViewKey, privateSpendKey, nil
 }
 
-// SaveWallet saves the sync status of the wallet. To be done regularly so when turtle-service crashes, sync is not lost
+// SaveWallet saves the sync status of the wallet. To be done regularly so when nibble-service crashes, sync is not lost
 func SaveWallet() (err error) {
 
 	err = nibbleclassicwalletdrpcgo.SaveWallet(rpcPassword)
@@ -264,15 +264,15 @@ func SaveWallet() (err error) {
 	return nil
 }
 
-// StartWalletd starts the turtle-service daemon with the set wallet info
+// StartWalletd starts the nibble-service daemon with the set wallet info
 // walletPath is the full path to the wallet
 // walletPassword is the wallet password
 // useRemoteNode is true if remote node, false if local
-// useCheckpoints is true if NibbleClassicd should be run with "--load-checkpoints"
+// useCheckpoints is true if Nibbled should be run with "--load-checkpoints"
 func StartWalletd(walletPath string, walletPassword string, useRemoteNode bool, useCheckpoints bool, daemonAddress string, daemonPort string) (err error) {
 
 	if isWalletdRunning() {
-		errorMessage := "turtle-service is already running in the background.\nPlease close it via "
+		errorMessage := "nibble-service is already running in the background.\nPlease close it via "
 
 		if isPlatformWindows {
 			errorMessage += "the task manager"
@@ -296,11 +296,11 @@ func StartWalletd(walletPath string, walletPassword string, useRemoteNode bool, 
 
 	pathToLogWalletdCurrentSession := logsFolder + directorySeparator + logWalletdCurrentSessionFilename
 	pathToLogWalletdAllSessions := logsFolder + directorySeparator + logWalletdAllSessionsFilename
-	pathToLogNibbleClassicdCurrentSession := logsFolder + directorySeparator + logNibbleClassicdCurrentSessionFilename
-	pathToLogNibbleClassicdAllSessions := logsFolder + directorySeparator + logNibbleClassicdAllSessionsFilename
+	pathToLogNibbledCurrentSession := logsFolder + directorySeparator + logNibbledCurrentSessionFilename
+	pathToLogNibbledAllSessions := logsFolder + directorySeparator + logNibbledAllSessionsFilename
 
 	pathToWalletd := "./" + walletdCommandName
-	pathToNibbleClassicd := "./" + NibbleClassicdCommandName
+	pathToNibbled := "./" + NibbledCommandName
 	checkpointsCSVFile := "checkpoints.csv"
 	pathToCheckpointsCSV := "./" + checkpointsCSVFile
 
@@ -321,7 +321,7 @@ func StartWalletd(walletPath string, walletPassword string, useRemoteNode bool, 
 	if isPlatformDarwin {
 		pathToAppContents := filepath.Dir(pathToAppDirectory)
 		pathToWalletd = pathToAppContents + "/" + walletdCommandName
-		pathToNibbleClassicd = pathToAppContents + "/" + NibbleClassicdCommandName
+		pathToNibbled = pathToAppContents + "/" + NibbledCommandName
 		pathToCheckpointsCSV = pathToAppContents + "/" + checkpointsCSVFile
 
 		usr, err := user.Current()
@@ -333,8 +333,8 @@ func StartWalletd(walletPath string, walletPassword string, useRemoteNode bool, 
 
 		pathToLogWalletdCurrentSession = pathToAppLibDir + "/" + pathToLogWalletdCurrentSession
 		pathToLogWalletdAllSessions = pathToAppLibDir + "/" + pathToLogWalletdAllSessions
-		pathToLogNibbleClassicdCurrentSession = pathToAppLibDir + "/" + pathToLogNibbleClassicdCurrentSession
-		pathToLogNibbleClassicdAllSessions = pathToAppLibDir + "/" + pathToLogNibbleClassicdAllSessions
+		pathToLogNibbledCurrentSession = pathToAppLibDir + "/" + pathToLogNibbledCurrentSession
+		pathToLogNibbledAllSessions = pathToAppLibDir + "/" + pathToLogNibbledAllSessions
 
 		if pathToWallet == WalletFilename {
 			// if comes from createWallet, so it is not a full path, just a filename
@@ -342,12 +342,12 @@ func StartWalletd(walletPath string, walletPassword string, useRemoteNode bool, 
 		}
 	} else if isPlatformLinux {
 		pathToWalletd = pathToAppDirectory + "/" + walletdCommandName
-		pathToNibbleClassicd = pathToAppDirectory + "/" + NibbleClassicdCommandName
+		pathToNibbled = pathToAppDirectory + "/" + NibbledCommandName
 		pathToCheckpointsCSV = pathToAppDirectory + "/" + checkpointsCSVFile
 		pathToLogWalletdCurrentSession = pathToAppDirectory + "/" + pathToLogWalletdCurrentSession
 		pathToLogWalletdAllSessions = pathToAppDirectory + "/" + pathToLogWalletdAllSessions
-		pathToLogNibbleClassicdCurrentSession = pathToAppDirectory + "/" + pathToLogNibbleClassicdCurrentSession
-		pathToLogNibbleClassicdAllSessions = pathToAppDirectory + "/" + pathToLogNibbleClassicdAllSessions
+		pathToLogNibbledCurrentSession = pathToAppDirectory + "/" + pathToLogNibbledCurrentSession
+		pathToLogNibbledAllSessions = pathToAppDirectory + "/" + pathToLogNibbledAllSessions
 		if pathToWallet == WalletFilename {
 			// if comes from createWallet, so it is not a full path, just a filename
 			pathToWallet = pathToAppDirectory + "/" + pathToWallet
@@ -363,7 +363,7 @@ func StartWalletd(walletPath string, walletPassword string, useRemoteNode bool, 
 
 	rpcPassword = randStringBytesMaskImprSrc(20)
 
-	var NibbleClassicdCurrentSessionLogFile *os.File
+	var NibbledCurrentSessionLogFile *os.File
 
 	if useRemoteNode {
 		cmdWalletd = exec.Command(pathToWalletd, "-w", pathToWallet, "-p", walletPassword, "--log-file", pathToLogWalletdCurrentSession, "--daemon-address", daemonAddress, "--daemon-port", daemonPort, "--log-level", walletdLogLevel, "--rpc-password", rpcPassword)
@@ -372,54 +372,54 @@ func StartWalletd(walletPath string, walletPassword string, useRemoteNode bool, 
 	}
 	hideCmdWindowIfNeeded(cmdWalletd)
 
-	if !useRemoteNode && !isNibbleClassicdRunning() {
+	if !useRemoteNode && !isNibbledRunning() {
 
-		NibbleClassicdCurrentSessionLogFile, err = os.Create(pathToLogNibbleClassicdCurrentSession)
+		NibbledCurrentSessionLogFile, err = os.Create(pathToLogNibbledCurrentSession)
 		if err != nil {
 			log.Error(err)
 		}
-		defer NibbleClassicdCurrentSessionLogFile.Close()
+		defer NibbledCurrentSessionLogFile.Close()
 
 		if useCheckpoints {
-			cmdNibbleClassicd = exec.Command(pathToNibbleClassicd, "--load-checkpoints", pathToCheckpointsCSV, "--log-file", pathToLogNibbleClassicdCurrentSession)
+			cmdNibbled = exec.Command(pathToNibbled, "--load-checkpoints", pathToCheckpointsCSV, "--log-file", pathToLogNibbledCurrentSession)
 		} else {
-			cmdNibbleClassicd = exec.Command(pathToNibbleClassicd, "--log-file", pathToLogNibbleClassicdCurrentSession)
+			cmdNibbled = exec.Command(pathToNibbled, "--log-file", pathToLogNibbledCurrentSession)
 		}
-		hideCmdWindowIfNeeded(cmdNibbleClassicd)
+		hideCmdWindowIfNeeded(cmdNibbled)
 
-		NibbleClassicdAllSessionsLogFile, err := os.OpenFile(pathToLogNibbleClassicdAllSessions, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+		NibbledAllSessionsLogFile, err := os.OpenFile(pathToLogNibbledAllSessions, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 		if err != nil {
 			log.Error(err)
 		}
-		cmdNibbleClassicd.Stdout = NibbleClassicdAllSessionsLogFile
-		defer NibbleClassicdAllSessionsLogFile.Close()
+		cmdNibbled.Stdout = NibbledAllSessionsLogFile
+		defer NibbledAllSessionsLogFile.Close()
 
-		err = cmdNibbleClassicd.Start()
+		err = cmdNibbled.Start()
 		if err != nil {
 			log.Error(err)
 			return err
 		}
 
-		log.Info("Opening NibbleClassicd and waiting for it to be ready.")
+		log.Info("Opening Nibbled and waiting for it to be ready.")
 
-		readerNibbleClassicdLog := bufio.NewReader(NibbleClassicdCurrentSessionLogFile)
+		readerNibbledLog := bufio.NewReader(NibbledCurrentSessionLogFile)
 
 		for {
-			line, err := readerNibbleClassicdLog.ReadString('\n')
+			line, err := readerNibbledLog.ReadString('\n')
 			if err != nil {
 				if err != io.EOF {
-					log.Error("Failed reading NibbleClassicd log file line by line: ", err)
+					log.Error("Failed reading Nibbled log file line by line: ", err)
 				}
 			}
 			if strings.Contains(line, "Imported block with index") {
-				log.Info("NibbleClassicd importing blocks: ", line)
+				log.Info("Nibbled importing blocks: ", line)
 			}
 			if strings.Contains(line, "Core rpc server started ok") {
-				log.Info("NibbleClassicd ready (rpc server started ok).")
+				log.Info("Nibbled ready (rpc server started ok).")
 				break
 			}
 			if strings.Contains(line, "Node stopped.") {
-				errorMessage := "Error NibbleClassicd: 'Node stopped'"
+				errorMessage := "Error Nibbled: 'Node stopped'"
 				log.Error(errorMessage)
 				return errors.New(errorMessage)
 			}
@@ -440,7 +440,7 @@ func StartWalletd(walletPath string, walletPassword string, useRemoteNode bool, 
 		return err
 	}
 
-	log.Info("Opening turtle-service and waiting for it to be ready.")
+	log.Info("Opening nibble-service and waiting for it to be ready.")
 
 	timesCheckLog := 0
 	timeBetweenChecks := 100 * time.Millisecond
@@ -463,7 +463,7 @@ func StartWalletd(walletPath string, walletPassword string, useRemoteNode bool, 
 			}
 			if strings.Contains(line, "Wallet loading is finished.") {
 				successLaunchingWalletd = true
-				log.Info("turtle-service ready ('Wallet loading is finished.').")
+				log.Info("nibble-service ready ('Wallet loading is finished.').")
 				break
 			}
 			if strings.Contains(line, "Imported block with index") {
@@ -477,7 +477,7 @@ func StartWalletd(walletPath string, walletPassword string, useRemoteNode bool, 
 						errorMessage = errorMessage + line
 					}
 				} else {
-					errorMessage = "turtle-service stopped with unknown error"
+					errorMessage = "nibble-service stopped with unknown error"
 				}
 
 				killWalletd()
@@ -495,7 +495,7 @@ func StartWalletd(walletPath string, walletPassword string, useRemoteNode bool, 
 	_, _, _, _, err = nibbleclassicwalletdrpcgo.RequestStatus(rpcPassword)
 	if err != nil {
 		killWalletd()
-		return errors.New("error communicating with turtle-service via rpc")
+		return errors.New("error communicating with nibble-service via rpc")
 	}
 
 	WalletdOpenAndRunning = true
@@ -518,9 +518,9 @@ func GracefullyQuitWalletd() {
 
 			err = cmdWalletd.Process.Kill()
 			if err != nil {
-				log.Error("failed to kill turtle-service: " + err.Error())
+				log.Error("failed to kill nibble-service: " + err.Error())
 			} else {
-				log.Info("turtle-service killed without error")
+				log.Info("nibble-service killed without error")
 			}
 		} else {
 			_ = cmdWalletd.Process.Signal(syscall.SIGTERM)
@@ -531,14 +531,14 @@ func GracefullyQuitWalletd() {
 			select {
 			case <-time.After(5 * time.Second):
 				if err := cmdWalletd.Process.Kill(); err != nil {
-					log.Warning("failed to kill turtle-service: " + err.Error())
+					log.Warning("failed to kill nibble-service: " + err.Error())
 				}
-				log.Info("turtle-service killed as stopping process timed out")
+				log.Info("nibble-service killed as stopping process timed out")
 			case err := <-done:
 				if err != nil {
-					log.Warning("turtle-service finished with error: " + err.Error())
+					log.Warning("nibble-service finished with error: " + err.Error())
 				}
-				log.Info("turtle-service killed without error")
+				log.Info("nibble-service killed without error")
 			}
 		}
 	}
@@ -564,60 +564,60 @@ func killWalletd() {
 			select {
 			case <-time.After(500 * time.Millisecond):
 				if err := cmdWalletd.Process.Kill(); err != nil {
-					log.Warning("failed to kill turtle-service: " + err.Error())
+					log.Warning("failed to kill nibble-service: " + err.Error())
 				}
-				log.Info("turtle-service killed as stopping process timed out")
+				log.Info("nibble-service killed as stopping process timed out")
 			case err := <-done:
 				if err != nil {
-					log.Warning("turtle-service finished with error: " + err.Error())
+					log.Warning("nibble-service finished with error: " + err.Error())
 				}
-				log.Info("turtle-service killed without error")
+				log.Info("nibble-service killed without error")
 			}
 		}
 	}
 }
 
-// GracefullyQuitNibbleClassicd stops the NibbleClassicd daemon
-func GracefullyQuitNibbleClassicd() {
+// GracefullyQuitNibbled stops the Nibbled daemon
+func GracefullyQuitNibbled() {
 
-	if cmdNibbleClassicd != nil {
+	if cmdNibbled != nil {
 		var err error
 
 		if isPlatformWindows {
-			// because syscall.SIGTERM does not work in windows. We have to kill NibbleClassicd.
+			// because syscall.SIGTERM does not work in windows. We have to kill Nibbled.
 
-			err = cmdNibbleClassicd.Process.Kill()
+			err = cmdNibbled.Process.Kill()
 			if err != nil {
-				log.Error("failed to kill NibbleClassicd: " + err.Error())
+				log.Error("failed to kill Nibbled: " + err.Error())
 			} else {
-				log.Info("NibbleClassicd killed without error")
+				log.Info("Nibbled killed without error")
 			}
 		} else {
-			_ = cmdNibbleClassicd.Process.Signal(syscall.SIGTERM)
+			_ = cmdNibbled.Process.Signal(syscall.SIGTERM)
 			done := make(chan error, 1)
 			go func() {
-				done <- cmdNibbleClassicd.Wait()
+				done <- cmdNibbled.Wait()
 			}()
 			select {
 			case <-time.After(5 * time.Second):
-				if err := cmdNibbleClassicd.Process.Kill(); err != nil {
-					log.Warning("failed to kill NibbleClassicd: " + err.Error())
+				if err := cmdNibbled.Process.Kill(); err != nil {
+					log.Warning("failed to kill Nibbled: " + err.Error())
 				}
-				log.Info("NibbleClassicd killed as stopping process timed out")
+				log.Info("Nibbled killed as stopping process timed out")
 			case err := <-done:
 				if err != nil {
-					log.Warning("NibbleClassicd finished with error: " + err.Error())
+					log.Warning("Nibbled finished with error: " + err.Error())
 				}
-				log.Info("NibbleClassicd killed without error")
+				log.Info("Nibbled killed without error")
 			}
 		}
 	}
 
-	cmdNibbleClassicd = nil
+	cmdNibbled = nil
 }
 
-// CreateWallet calls turtle-service to create a new wallet. If privateViewKey, privateSpendKey and mnemonicSeed are empty strings, a new wallet will be generated. If they are not empty, a wallet will be generated from those keys or from the seed (import)
-// walletFilename is the filename chosen by the user. The created wallet file will be located in the same folder as turtle-service.
+// CreateWallet calls nibble-service to create a new wallet. If privateViewKey, privateSpendKey and mnemonicSeed are empty strings, a new wallet will be generated. If they are not empty, a wallet will be generated from those keys or from the seed (import)
+// walletFilename is the filename chosen by the user. The created wallet file will be located in the same folder as nibble-service.
 // walletPassword is the password of the new wallet.
 // walletPasswordConfirmation is the repeat of the password for confirmation that the password was correctly entered.
 // privateViewKey is the private view key of the wallet.
@@ -626,7 +626,7 @@ func GracefullyQuitNibbleClassicd() {
 func CreateWallet(walletFilename string, walletPassword string, walletPasswordConfirmation string, privateViewKey string, privateSpendKey string, mnemonicSeed string, scanHeight string) (err error) {
 
 	if WalletdOpenAndRunning {
-		return errors.New("turtle-service is already running. It should be stopped before being able to generate a new wallet")
+		return errors.New("nibble-service is already running. It should be stopped before being able to generate a new wallet")
 	}
 
 	if strings.Contains(walletFilename, "/") || strings.Contains(walletFilename, " ") || strings.Contains(walletFilename, ":") {
@@ -634,7 +634,7 @@ func CreateWallet(walletFilename string, walletPassword string, walletPasswordCo
 	}
 
 	if isWalletdRunning() {
-		errorMessage := "turtle-service is already running in the background.\nPlease close it via "
+		errorMessage := "nibble-service is already running in the background.\nPlease close it via "
 
 		if isPlatformWindows {
 			errorMessage += "the task manager"
@@ -767,7 +767,7 @@ func CreateWallet(walletFilename string, walletPassword string, walletPasswordCo
 						errorMessage = errorMessage + line
 					}
 				} else {
-					errorMessage = "turtle-service stopped with unknown error"
+					errorMessage = "nibble-service stopped with unknown error"
 				}
 
 				killWalletd()
@@ -891,14 +891,14 @@ func isWalletdRunning() bool {
 	return false
 }
 
-func isNibbleClassicdRunning() bool {
+func isNibbledRunning() bool {
 
-	if _, _, err := findProcess(NibbleClassicdCommandName); err == nil {
+	if _, _, err := findProcess(NibbledCommandName); err == nil {
 		return true
 	}
 
 	if isPlatformWindows {
-		if _, _, err := findProcess(NibbleClassicdCommandName + ".exe"); err == nil {
+		if _, _, err := findProcess(NibbledCommandName + ".exe"); err == nil {
 			return true
 		}
 	}

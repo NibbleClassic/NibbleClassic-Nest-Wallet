@@ -15,7 +15,7 @@ The universal desktop GUI wallet for NibbleClassic
 
 Important notes:
 
-* Make sure *turtle-service.exe* is not running before you start *NibbleClassic-Nest*
+* Make sure *nibble-service.exe* is not running before you start *NibbleClassic-Nest*
 
 ### Mac
 
@@ -79,7 +79,7 @@ TRTLv3jzutiQwqHL3qFwsu5EVLWesxZr1AFQ4AuMR3SD56n3rkHDkwj79eKwvaiU1nYQWGydKoXM6fXy
     ```
 
 1. The app folder is in deploy/linux/
-1. Include the latest _turtle-service_ and _NibbleClassicd_ builds in the app folder
+1. Include the latest _nibble-service_ and _Nibbled_ builds in the app folder
 
 ### Windows - Mac
 
@@ -96,6 +96,6 @@ TRTLv3jzutiQwqHL3qFwsu5EVLWesxZr1AFQ4AuMR3SD56n3rkHDkwj79eKwvaiU1nYQWGydKoXM6fXy
 
 1. The app folder is in deploy/*your os*/
 
-1. Include the latest _turtle-service_ and _NibbleClassicd_ builds in:
+1. Include the latest _nibble-service_ and _Nibbled_ builds in:
     * Windows: in the app folder
     * Mac: in NibbleClassic-Nest.app/Contents/
