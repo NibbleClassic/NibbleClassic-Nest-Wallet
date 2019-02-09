@@ -2,7 +2,7 @@
 
 The universal desktop GUI wallet for NibbleClassic
 
-![Logo](/NibbleClassicnestlogo.png)
+![Logo](/nibbleclassicnestlogo.png)
 
 ## Installation
 

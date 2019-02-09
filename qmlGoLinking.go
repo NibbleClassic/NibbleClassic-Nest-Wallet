@@ -35,7 +35,7 @@ type QmlBridge struct {
 		transactionID string,
 		amount string,
 		confirmations string,
-		time string,
+		timeString string,
 		number string) `signal:"addTransactionToList"`
 	_ func(nodeName string)                    `signal:"addRemoteNodeToList"`
 	_ func(index int, newText string)          `signal:"changeTextRemoteNode"`
