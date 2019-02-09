@@ -44,6 +44,8 @@ Nib1bW1CQPHJqRQjHEG96t9im5BUN3iQ243kt45NeU8YTKV3fmhTYmaLqqG9p1HQkk769JYR3Y8YCPYN
 TurtleCoin Nest Devs:
 TRTLv3jzutiQwqHL3qFwsu5EVLWesxZr1AFQ4AuMR3SD56n3rkHDkwj79eKwvaiU1nYQWGydKoXM6fXyiiGKsPDnVCNXzNdusxx
 
+gfx by [thomsane](https://thomsane.de)
+
 ## Build - (for developers only)
 
 ### Linux
