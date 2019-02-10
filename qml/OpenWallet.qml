@@ -63,7 +63,7 @@ Rectangle {
                 OldControls.CheckBox {
                     id: checkBoxCheckpoints
                     text: "(       checkpoints)"
-                    checked: true
+                    checked: false
 
                     style: CheckBoxStyle {
                         label: Text {
