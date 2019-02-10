@@ -5,6 +5,12 @@
       "url": "node.nbx.hackerknowledge.de",
       "port": 17122,
       "ssl": false
+    },
+    {
+      "name": "Nibblenode.net Public Node",
+      "url": "nibblenode.net",
+      "port": 17122,
+      "ssl": false
     }
   ]
 }
