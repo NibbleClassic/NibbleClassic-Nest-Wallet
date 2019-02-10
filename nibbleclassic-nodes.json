@@ -7,8 +7,8 @@
       "ssl": false
     },
     {
-      "name": "NibbleClassic Public Node",
-      "url": "172.62.42.108",
+      "name": "Nibblenode.net Public Node",
+      "url": "nibblenode.net",
       "port": 17122,
       "ssl": false
     }

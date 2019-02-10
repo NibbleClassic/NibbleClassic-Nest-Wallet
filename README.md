@@ -10,7 +10,7 @@ The universal desktop GUI wallet for NibbleClassic
 
 ### Windows
 
-1. Go [here](https://github.com/Seimax/nibbleclassic-wallet-go/releases) and download the latest release called **NibbleClassic-Nest-x.xx-Windows.zip**
+1. Go [here](https://github.com/Seimax/nibbleclassic-wallet-go/releases) and download the latest release called **NibbleClassic-Nest-Winxx-vx.xx.zip**
 2. Unzip the folder and launch **NibbleClassic-Nest.exe**. (Make sure you leave everything as is in the folder)
 
 Important notes:
@@ -23,7 +23,8 @@ No Build right now!
 
 ### Linux
 
-No Build right now!
+1. Go [here](https://github.com/Seimax/nibbleclassic-wallet-go/releases) and download the latest release called **NibbleClassic-Nest-Linux-vx.xx.tar.gz**
+2. Unzip(tar -xzf NibbleClassic-Nest-Linux-vx.xx.tar.gz) the folder and launch **./nibbleclassic-wallet-go**. (Make sure you leave everything as is in the folder)
 
 ## Upgrade
 
