@@ -5,12 +5,6 @@
       "url": "node.nbx.hackerknowledge.de",
       "port": 17122,
       "ssl": false
-    },
-    {
-      "name": "NibbleClassic Public Node",
-      "url": "172.62.42.108",
-      "port": 17122,
-      "ssl": false
     }
   ]
 }
