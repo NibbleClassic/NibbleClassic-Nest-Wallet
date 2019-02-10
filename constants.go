@@ -6,16 +6,16 @@
 package main
 
 const (
-	versionNest                 = "0.37"
+	versionNest                 = "0.1"
 	urlCryptoCompareNBX        = "https://min-api.cryptocompare.com/data/price?fsym=NBX&tsyms=USD"
 	logFileFilename             = "NibbleClassic-Nest.log"
-	urlBlockExplorer            = "https://blocks.turtle.link/"
+	urlBlockExplorer            = "https://nbx.cryptonight.mine.nu/explorer/"
 	dbFilename                  = "settings.db"
 	numberTransactionsToDisplay = 20
 
 	// default remote node
-	defaultRemoteDaemonAddress = "public.turtlenode.online"
-	defaultRemoteDaemonPort    = "11898"
-	defaultRemoteDaemonName    = "public.turtlenode.online"
+	defaultRemoteDaemonAddress = "node.nbx.hackerknowledge.de"
+	defaultRemoteDaemonPort    = "17122"
+	defaultRemoteDaemonName    = "node.nbx.hackerknowledge.de"
 	defaultRemoteDaemonSSL     = false
 )
