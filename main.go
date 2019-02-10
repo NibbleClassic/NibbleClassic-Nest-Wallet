@@ -636,7 +636,7 @@ func requestRateNBX() {
 				log.Error("error JSON unmarshaling request cryptocompare: ", err)
 			} else {
 				resultsMap := resultInterface.(map[string]interface{})
-				rateUSDNBX = resultsMap["USD"].(float64)
+				rateUSDNBX = resultsMap["usd"].(float64)
 			}
 		}
 	}

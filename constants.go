@@ -7,7 +7,7 @@ package main
 
 const (
 	versionNest                 = "0.1"
-	urlCryptoCompareNBX         = "https://min-api.cryptocompare.com/data/price?fsym=NBX&tsyms=USD"
+	urlCryptoCompareNBX         = "https://api.coingecko.com/api/v3/simple/price?ids=nibbleclassic&vs_currencies=usd"
 	logFileFilename             = "NibbleClassic-Nest.log"
 	urlBlockExplorer            = "https://nbx.cryptonight.mine.nu/explorer/"
 	dbFilename                  = "settings.db"
