@@ -1,14 +1,14 @@
 {
   "nodes": [
     {
-      "name": "NibbleClassic public node",
-      "url": "172.62.42.108",
+      "name": "Hackerknowledge.de Public Node",
+      "url": "node.nbx.hackerknowledge.de",
       "port": 17122,
       "ssl": false
     },
     {
-      "name": "Hackerknowledge.de",
-      "url": "pool.nbx.hackerknowledge.de",
+      "name": "NibbleClassic Public Node",
+      "url": "172.62.42.108",
       "port": 17122,
       "ssl": false
     }
