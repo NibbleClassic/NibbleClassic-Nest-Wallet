@@ -19,7 +19,7 @@ matrix:
     - LABEL="linux"
 
 script:
-- export NibbleClassic_URL=https://api.github.com/repos/NibbleClassic/NibbleClassic/releases/latest
+- export NibbleClassic_URL=https://api.github.com/repos/Seimax/nibbleclassic-wallet-go/releases/latest
 
 # Linux build commands
 - if [[ "$LABEL" == "linux" ]]; then ./scripts/build_linux.sh ; fi
@@ -28,7 +28,7 @@ script:
 - if [[ "$LABEL" == "linux" ]]; then export NibbleClassic_DOWNLOAD=`curl -s $NibbleClassic_URL | grep browser_download_url | grep linux | cut -d '"' -f 4` ; fi
 - if [[ "$LABEL" == "linux" ]]; then wget $NibbleClassic_DOWNLOAD ; fi
 - if [[ "$LABEL" == "linux" ]]; then tar xzf $LATEST_NibbleClassic --strip-components 1 ; fi
-- if [[ "$LABEL" == "linux" ]]; then cp NibbleClassicd turtle-service ./deploy/linux ; fi
+- if [[ "$LABEL" == "linux" ]]; then cp Nibbled nibble-service ./deploy/linux ; fi
 - if [[ "$LABEL" == "linux" ]]; then ls -la ./deploy/linux ; fi
 
 - if [[ "${TRAVIS_TAG}" == "" ]]; then export TRAVIS_TAG=${TRAVIS_COMMIT} ; fi

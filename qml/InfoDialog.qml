@@ -17,8 +17,8 @@ Dialog {
     standardButtons: StandardButton.Ok
     width: 900
 
-    property var addressDev: "NBXv3jzutiQwqHL3qFwsu5EVLWesxZr1AFQ4AuMR3SD56n3rkHDkwj79eKwvaiU1nYQWGydKoXM6fXyiiGKsPDnVCNXzNdusxx"
-    property var websiteChat: "http://chat.NibbleClassic.lol"
+    property var addressDev: "Nib1bW1CQPHJqRQjHEG96t9im5BUN3iQ243kt45NeU8YTKV3fmhTYmaLqqG9p1HQkk769JYR3Y8YCPYNWvoN9nxe5nTXHLW3GH"
+    property var websiteChat: "https://discord.gg/jzdt9Ck"
     property var versionNest: ""
     property var newVersionNestAvailable: ""
     property var urlNewVersionNest: ""
@@ -145,7 +145,7 @@ Dialog {
 
     Text {
         id: textDescriptionDonate
-        text: "Donate to support Nest's dev"
+        text: "Donate to support NibbleClassic Nest's dev"
         font.family: "Arial"
         font.pixelSize: 13
         anchors.top: textHelp.bottom

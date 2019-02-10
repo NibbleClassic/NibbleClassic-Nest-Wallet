@@ -123,7 +123,7 @@ func main() {
 	log.WithField("version", versionNest).Info("Application started")
 
 	go func() {
-		requestRateNBX()
+		//requestRateNBX()
 	}()
 
 	platform := "linux"
