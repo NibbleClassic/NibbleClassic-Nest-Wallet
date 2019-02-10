@@ -19,7 +19,7 @@ matrix:
     - LABEL="linux"
 
 script:
-- export NibbleClassic_URL=https://api.github.com/repos/Seimax/nibbleclassic-wallet-go/releases/latest
+- export NibbleClassic_URL=https://api.github.com/repos/NibbleClassic/nibbleclassic-wallet-go/releases/latest
 
 # Linux build commands
 - if [[ "$LABEL" == "linux" ]]; then ./scripts/build_linux.sh ; fi

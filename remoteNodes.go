@@ -22,7 +22,7 @@ type nodeFeeInfo struct {
 	Amount  float64 `json:"amount"`
 }
 
-const urlNibbleClassicRemoteNodes = "https://raw.githubusercontent.com/Seimax/nibbleclassic-wallet-go/master/nibbleclassic-nodes.json"
+const urlNibbleClassicRemoteNodes = "https://raw.githubusercontent.com/NibbleClassic/nibbleclassic-wallet-go/master/nibbleclassic-nodes.json"
 const apiPointFee = "/fee"
 const apiPointFee2 = "/feeinfo"
 
