@@ -186,7 +186,7 @@ NibbleClassic addresses are strings of 99 characters (187 for integrated address
 - in walletdmanager/walletdmanager.go, change the "99" and "187" by the sizes of your addresses and integrated addresses respectively:
 
     ```Go
-    if !strings.HasPrefix(transferAddress, "NBX") || (len(transferAddress) != 99 && len(transferAddress) != 187) {
+    if !strings.HasPrefix(transferAddress, "Nib") || (len(transferAddress) != 98 && len(transferAddress) != 187) {
         return "", errors.New("address is invalid")
     }
     ```
