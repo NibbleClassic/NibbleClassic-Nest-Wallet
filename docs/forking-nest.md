@@ -181,21 +181,21 @@ Search for "NBX" in the code, and everytime it is in a string, change it for you
 
 ### Address size
 
-NibbleClassic addresses are strings of 99 characters (187 for integrated addresses). If you changed those parameters, change them also in Nest code:
+NibbleClassic addresses are strings of 99 characters (186 for integrated addresses). If you changed those parameters, change them also in Nest code:
 
-- in walletdmanager/walletdmanager.go, change the "99" and "187" by the sizes of your addresses and integrated addresses respectively:
+- in walletdmanager/walletdmanager.go, change the "99" and "186" by the sizes of your addresses and integrated addresses respectively:
 
     ```Go
-    if !strings.HasPrefix(transferAddress, "Nib") || (len(transferAddress) != 98 && len(transferAddress) != 187) {
+    if !strings.HasPrefix(transferAddress, "Nib") || (len(transferAddress) != 98 && len(transferAddress) != 186) {
         return "", errors.New("address is invalid")
     }
     ```
 
-- in qml/wallet.qml, change the "187" by the size of your integrated addresses:
+- in qml/wallet.qml, change the "18" by the size of your integrated addresses:
 
     ```Go
     /* Disable payment ID input if integrated address */
-    textInputTransferPaymentID.enabled = textInputTransferAddress.text.length != 187
+    textInputTransferPaymentID.enabled = textInputTransferAddress.text.length != 186
     ```
 
 ### Decimal point

@@ -148,7 +148,7 @@ func SendTransaction(transferAddress string, transferAmountString string, transf
 	}
 
 	if !strings.HasPrefix(transferAddress, "Nib") || (len(transferAddress) != 98 && len(transferAddress) != 186) {
-		return "", errors.New("address is invalid")
+		return "", errors.New("address is invalid")		
 	}
 
 	if transferAddress == WalletAddress {
