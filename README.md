@@ -31,6 +31,10 @@ No Build right now!
 Just download the new release and follow the same steps as [Installation](#installation).
 If you are on Windows or Linux, move your wallets (.wallet) and settings.db files from the old Nest folder to the new. Then you can delete the old folder. (on Mac, you do not need to move the settings.db file as it stays in ~/Library/Application Support/NibbleClassic-Nest/).
 
+## Checkpoints
+
+NibbleClassic Nest Supports the loading of a Checkpoints file. This is recommended when using a local node to shorten the waiting time for loading the chain. You find the actual checkpoints.csv at https://github.com/NibbleClassic/Checkpoints
+
 ## Screenshots
 
 ![Main Screen](/Screenshots/MainScreen.png)
