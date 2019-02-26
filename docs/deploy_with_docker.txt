@@ -1,0 +1,4 @@
+qtdeploy -docker build windows_32_shared
+
+qtdeploy -docker build windows_64_shared
+-> isco file must be converted before: windres icon.rc -o icon_windows.syso
