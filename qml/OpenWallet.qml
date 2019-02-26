@@ -55,6 +55,7 @@ Rectangle {
                 OldControls.RadioButton {
                     id: radioButtonUseLocal
                     text: "Local blockchain"
+					checked: false
                     exclusiveGroup: tabPositionGroup
                     style: radioButtonStyle
                     onClicked: QmlBridge.choseRemote(false)
@@ -63,7 +64,7 @@ Rectangle {
                 OldControls.CheckBox {
                     id: checkBoxCheckpoints
                     text: "(       checkpoints)"
-                    checked: false
+                    checked: true
 
                     style: CheckBoxStyle {
                         label: Text {

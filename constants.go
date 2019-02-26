@@ -6,7 +6,7 @@
 package main
 
 const (
-	versionNest                 = "0.2"
+	versionNest                 = "0.3"
 	urlCryptoCompareNBX         = "https://api.coingecko.com/api/v3/simple/price?ids=nibbleclassic&vs_currencies=usd"
 	logFileFilename             = "NibbleClassic-Nest.log"
 	urlBlockExplorer            = "https://nbx.cryptonight.mine.nu/explorer/"

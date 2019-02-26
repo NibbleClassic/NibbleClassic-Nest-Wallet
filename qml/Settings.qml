@@ -69,7 +69,7 @@ Rectangle {
     OldControls.CheckBox {
         id: checkBoxUSD
         text: "Display values also in USD"
-        checked: false
+        checked: true
         anchors.top: parent.top
         anchors.topMargin: 180
         anchors.left: parent.left

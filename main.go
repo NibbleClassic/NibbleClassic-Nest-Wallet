@@ -123,7 +123,7 @@ func main() {
 	log.WithField("version", versionNest).Info("Application started")
 
 	go func() {
-		//requestRateNBX()
+		requestRateNBX()
 	}()
 
 	platform := "linux"
@@ -635,8 +635,9 @@ func requestRateNBX() {
 			if err := json.Unmarshal(b, &resultInterface); err != nil {
 				log.Error("error JSON unmarshaling request cryptocompare: ", err)
 			} else {
-				resultsMap := resultInterface.(map[string]interface{})
-				rateUSDNBX = resultsMap["usd"].(float64)
+				resultsMap1 := resultInterface.(map[string]interface{})
+				resultsMap2 := resultsMap1["nibbleclassic"].(map[string]interface{})
+				rateUSDNBX = resultsMap2["usd"].(float64)
 			}
 		}
 	}
