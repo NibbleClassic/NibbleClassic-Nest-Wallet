@@ -34,7 +34,7 @@ func setupDB(pathToDB string) {
 		log.Fatal("error creating table remoteNode. err: ", err)
 	}
 
-	_, err = db.Exec("CREATE TABLE IF NOT EXISTS fiatConversion (id INTEGER PRIMARY KEY AUTOINCREMENT, displayFiat BOOL NOT NULL DEFAULT '0', currency VARCHAR(64) DEFAULT 'USD')")
+	_, err = db.Exec("CREATE TABLE IF NOT EXISTS fiatConversion (id INTEGER PRIMARY KEY AUTOINCREMENT, displayFiat BOOL NOT NULL DEFAULT '1', currency VARCHAR(64) DEFAULT 'USD')")
 	if err != nil {
 		log.Fatal("error creating table fiatConversion. err: ", err)
 	}

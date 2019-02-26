@@ -93,7 +93,7 @@ Rectangle {
     Text {
         id: textSettingsUSDDescr
         color: "#ffffff"
-        text: "(Exchange rate from cryptocompare.com.)\n(Consider cautiously as current volume and liquidity are extremely low.)"
+        text: "(Exchange rate from coingecko.com.)\n(Consider cautiously as current volume and liquidity are extremely low.)"
         anchors.verticalCenterOffset: 0
         anchors.verticalCenter: checkBoxUSD.verticalCenter
         anchors.left: checkBoxUSD.right

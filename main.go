@@ -43,7 +43,7 @@ var (
 	tickerSaveWallet            *time.Ticker
 	useRemoteNode               = true
 	useCheckpoints              = true
-	displayFiatConversion       = false
+	displayFiatConversion       = true
 	stringBackupKeys            = ""
 	rateUSDNBX                 float64 // USD value for 1 NBX
 	customRemoteDaemonAddress   = defaultRemoteDaemonAddress
