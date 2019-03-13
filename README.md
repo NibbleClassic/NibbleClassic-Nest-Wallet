@@ -1,4 +1,4 @@
-# NibbleClassic Nest
+# NibbleClassic Nest Wallet
 
 The universal desktop GUI wallet for NibbleClassic
 
@@ -10,8 +10,8 @@ The universal desktop GUI wallet for NibbleClassic
 
 ### Windows
 
-1. Go [here](https://github.com/Seimax/nibbleclassic-wallet-go/releases) and download the latest release called **NibbleClassic-Nest-Winxx-vx.xx.zip**
-2. Unzip the folder and launch **NibbleClassic-Nest.exe**. (Make sure you leave everything as is in the folder)
+1. Go [here](https://github.com/NibbleClassic/NibbleClassic-Nest-Wallet/releases) and download the latest release called **NibbleClassic-Nest-Winxx-vx.xx.zip**
+2. Unzip the folder and launch **NibbleClassic-Nest-Wallet.exe**. (Make sure you leave everything as is in the folder)
 
 Important notes:
 
@@ -23,17 +23,17 @@ No Build right now!
 
 ### Linux
 
-1. Go [here](https://github.com/Seimax/nibbleclassic-wallet-go/releases) and download the latest release called **NibbleClassic-Nest-Linux-vx.xx.tar.gz**
-2. Unzip(tar -xzf NibbleClassic-Nest-Linux-vx.xx.tar.gz) the folder and launch **./nibbleclassic-wallet-go**. (Make sure you leave everything as is in the folder)
+1. Go [here](https://github.com/NibbleClassic/NibbleClassic-Nest-Wallet/releases) and download the latest release called **NibbleClassic-Nest-Linux-vx.xx.tar.gz**
+2. Unzip(tar -xzf NibbleClassic-Nest-Linux-vx.xx.tar.gz) the folder and launch **./NibbleClassic-Nest-Wallet**. (Make sure you leave everything as is in the folder)
 
 ## Upgrade
 
 Just download the new release and follow the same steps as [Installation](#installation).
-If you are on Windows or Linux, move your wallets (.wallet) and settings.db files from the old Nest folder to the new. Then you can delete the old folder. (on Mac, you do not need to move the settings.db file as it stays in ~/Library/Application Support/NibbleClassic-Nest/).
+If you are on Windows or Linux, move your wallets (.wallet) and settings.db files from the old Nest folder to the new. Then you can delete the old folder. (on Mac, you do not need to move the settings.db file as it stays in ~/Library/Application Support/NibbleClassic-Nest-Wallet/).
 
 ## Checkpoints
 
-NibbleClassic Nest Supports the loading of a Checkpoints file. This is recommended when using a local node to shorten the waiting time for loading the chain. You find the actual checkpoints.csv at https://github.com/NibbleClassic/Checkpoints
+NibbleClassic Nest Wallet Supports the loading of a Checkpoints file. This is recommended when using a local node to shorten the waiting time for loading the chain. You find the actual checkpoints.csv at https://github.com/NibbleClassic/Checkpoints
 
 ## Screenshots
 
@@ -79,9 +79,9 @@ gfx by [thomsane](https://thomsane.de)
 6. Type the following commands to clone the Nest wallet, install dependencies and build the wallet.
     ```
     $ cd $HOME/go/src
-    $ git clone https://github.com/NibbleClassic/turtle-wallet-go.git NibbleClassic-Nest
+    $ git clone https://github.com/NibbleClassic/NibbleClassic-Nest-Wallet.git
     $ go get -v github.com/atotto/clipboard github.com/dustin/go-humanize github.com/mattn/go-sqlite3 github.com/mcuadros/go-version github.com/mitchellh/go-ps github.com/pkg/errors
-    $ cd NibbleClassic-Nest
+    $ cd NibbleClassic-Nest-Wallet
     $ qtdeploy build desktop
     ```
 
@@ -105,4 +105,4 @@ gfx by [thomsane](https://thomsane.de)
 
 1. Include the latest _nibble-service_ and _Nibbled_ builds in:
     * Windows: in the app folder
-    * Mac: in NibbleClassic-Nest.app/Contents/
+    * Mac: in NibbleClassic-Nest-Wallet.app/Contents/
